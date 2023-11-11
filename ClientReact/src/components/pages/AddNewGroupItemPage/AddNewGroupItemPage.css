@@ -1,0 +1,31 @@
+.addNewGroupItemPage_container {
+    padding: 10px;
+}
+
+.addNewGroupItemPage_content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.addNewGroupItemPage_content input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.addNewGroupItemPage_content textarea {
+    padding: 12px 20px;
+    margin: 8px 0;
+    height: 140px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    min-width: 100%;
+    max-width: 100px;
+}
+
+.addNewGroupItemPage_buttonContainer {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,4 @@
+.mainFrameSeparator {
+    border: 1px solid var(--theme-color);
+    margin: 10px 0px;
+}

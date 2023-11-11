@@ -1,0 +1,37 @@
+.groupItemPage_content {
+    padding: 10px;
+}
+
+.groupItemPage_content>div {
+    margin-bottom: 10px;
+}
+
+.groupItemPage_item {
+    padding: 10px 0px;
+}
+
+.groupItemPage_text {
+    margin: 0px;
+    padding: 10px;
+    margin-bottom: 0px;
+}
+
+.groupItemPage_author {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0px 10px 0px 0px;
+}
+
+.groupItemPage_author>a {
+    text-decoration: none;
+    padding: 0px 0px 0px 5px;
+    color: var(--theme-color);
+}
+
+.groupItemPage_comments {
+    padding: 10px 5px 0px 5px;
+}
+
+.groupItemPage_addNewComment {
+    padding: 0px 10px;
+}

@@ -1,0 +1,25 @@
+.registerPage_container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 50%;
+    margin: auto;
+}
+
+.registerPage_container input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.registerPage_buttonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.registerPage_imagePreview {
+    width: 160px;
+    height: 160px;
+}

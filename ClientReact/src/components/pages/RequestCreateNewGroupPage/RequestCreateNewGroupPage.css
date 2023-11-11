@@ -1,0 +1,21 @@
+.requestCreateNewGroupPage_container {
+    padding: 10px;
+}
+
+.requestCreateNewGroupPage_content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.requestCreateNewGroupPage_content input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.requestCreateNewGroupPage_buttonContainer {
+    display: flex;
+    justify-content: center;
+}

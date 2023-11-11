@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "22a94bdb-51c8-46ab-93ee-28b4ec0c2760",
+		"name": "ApiGateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25409175"
+	},
+	"item": [
+		{
+			"name": "AuthorizationService",
+			"item": [
+				{
+					"name": "Register",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserName\" : \"user\",\r\n    \"password\" : \"12345678\",\r\n    \"email\" : \"user@test.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4042/api/authorization/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"authorization",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserName\" : \"user\",\r\n    \"password\" : \"12345678\",\r\n    \"email\" : \"user@test.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4042/api/authorization/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"authorization",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GroupService",
+			"item": [
+				{
+					"name": "GetGroups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4042/api/group/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"group",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddGroup",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"connection": true,
+							"accept-encoding": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\" : \"Group 1\",\r\n    \"Description\" : \"Group 1 Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4042/api/group",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroupById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4042/api/group/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"group",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddPost",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\" : \"Post name\",\r\n    \"Text\" : \"Post text\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4042/api/group/1/post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"group",
+								"1",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPostById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4042/api/group/1/post/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"group",
+								"1",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddComment",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Text\" : \"Comment\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4042/api/group/1/post/1/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4042",
+							"path": [
+								"api",
+								"group",
+								"1",
+								"post",
+								"1",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

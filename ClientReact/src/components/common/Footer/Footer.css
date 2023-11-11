@@ -1,0 +1,6 @@
+.footer {
+    height: 24px;
+    border-top: 1px  solid var(--theme-color);
+    border-bottom: 1px  solid var(--theme-color);
+    text-align: center;
+}

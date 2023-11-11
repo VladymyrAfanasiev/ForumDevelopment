@@ -1,0 +1,84 @@
+.mainGroup {
+    margin-bottom: 10px;
+}
+
+.mainGroupName {
+    display: flex;
+    background: var(--theme-color);
+    margin-top: 0px;
+    padding: 10px 20px;
+    margin-bottom: 0px;
+}
+
+.mainGroupName a{
+    align-self: center;
+    color: white;
+    text-decoration: none;
+}
+
+.addNewGroup_a_button {
+    margin: 0 0 0 auto;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    cursor: pointer;
+    border: 2px solid var(--theme-color);
+    border-radius: 50%;
+
+}
+
+.addNewGroup_a_button:after {
+  content: '';
+  position: absolute;
+  transform: translate(-50%, -50%);
+  height: 4px;
+  width: 50%;
+  background: var(--theme-color);
+  top: 50%;
+  left: 50%;
+}
+
+.addNewGroup_a_button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--theme-color);
+  height: 50%;
+  width: 4px;
+}
+
+.addNewGroup_a_button:hover:before,
+.addNewGroup_a_button:hover:after {
+  background: #fff;
+  transition: 0.2s;
+}
+  
+.addNewGroup_a_button:hover {
+    background-color: var(--theme-color);
+    transition: 0.2s;
+}
+
+.groupItemsContainer ol {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    border-color: var(--theme-color);
+    border: 2px solid var(--theme-color);
+    min-height: 60px;
+}
+
+.h2-remove-whitespace {
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    height: 25px;
+}
+
+.groupItemsContainer_openMove {
+    display: flex;
+    justify-content: center;
+    padding: 5px 0px 10px 0px;
+}

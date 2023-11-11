@@ -1,0 +1,23 @@
+.registerLicence_text_container {
+    margin: 0px 10px;
+    padding-top: 10px;
+}
+
+.registerLicence_text {
+    margin: 0px 0px 10px 0px;
+    padding: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #f8f9fa;
+    color: #000000;
+    border: 1px solid #eaecf0;
+}
+
+.registerLicence_buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.registerLicence_buttons a {
+    margin-left: 10px;
+}

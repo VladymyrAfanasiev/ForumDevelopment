@@ -1,0 +1,13 @@
+.mainFrame_name {
+    display: flex;
+    background: var(--theme-color);
+    margin-top: 0px;
+    padding: 10px 20px;
+    margin-bottom: 0px;
+    color: white;
+}
+
+.mainFrame_content {
+    border-color: var(--theme-color);
+    border: 2px solid var(--theme-color);
+}

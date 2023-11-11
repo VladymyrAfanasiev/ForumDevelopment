@@ -1,0 +1,31 @@
+.userPage_content {
+    padding: 10px;
+}
+
+.userPage_userGeneralInfo {
+    display: flex;
+    padding: 10px 10px 0px 10px;
+}
+
+.userPage_img img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.userPage_shortDescription {
+    padding-left: 10px;
+}
+
+.userPage_tabs {
+    padding: 0px 10px;
+    display: flex;
+}
+
+.userPage_tabs button {
+    margin-right: 10px;
+}
+
+.userPage_tabContent {
+    padding: 10px;
+}
