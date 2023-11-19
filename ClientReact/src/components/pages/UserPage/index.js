@@ -1,6 +1,5 @@
-import { React } from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { React, useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom"
 import { withTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next/icu.macro';
 
@@ -11,8 +10,9 @@ import authService from '../../../services/AuthService';
 
 import "./UserPage.css";
 
-function UserPage(props) {
+function UserPage() {
     const params = useParams();
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const [activeTab, setActiveTab] = useState('Profile');
 
@@ -24,6 +24,8 @@ function UserPage(props) {
             }
             else {
                 alert(result.message);
+
+                navigate(-1);
             }
         }
 
