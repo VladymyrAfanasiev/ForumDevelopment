@@ -60,7 +60,7 @@ namespace AuthorizationServiceDevelopment.Controllers
 		[HttpGet("user/{userId:int}")]
 		public IActionResult GetUserById(int userId)
 		{
-			UserModel userModel = this.userService.GetUser(userId);
+			UserModel userModel = this.userService.GetUserById(userId);
 			if (userModel == null)
 			{
 				return NotFound("User not found");

@@ -6,7 +6,7 @@ namespace AuthorizationServiceDevelopment.Services
 	{
 		UserModel CreateUser(UserCreationModel creationModel);
 		UserModel GetUser(UserAuthenticationModel authorizationModel);
-		UserModel GetUser(int id);
+		UserModel GetUserById(int id);
 		bool CheckUserExistance(UserCreationModel creationModel);
 	}
 }

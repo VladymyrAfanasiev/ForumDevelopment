@@ -4,6 +4,7 @@ using AuthorizationServiceDevelopment.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthorizationServiceDevelopment.Migrations
 {
     [DbContext(typeof(AuthorizationDbContext))]
-    partial class AuthorizationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231119023921_UserJoinedOn")]
+    partial class UserJoinedOn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

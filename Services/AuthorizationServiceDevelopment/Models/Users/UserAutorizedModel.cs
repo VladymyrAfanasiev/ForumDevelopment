@@ -16,6 +16,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 			Id = userModel.Id;
 			UserName = userModel.UserName;
 			Email = userModel.Email;
+			JoinedOn = userModel.JoinedOn;
 			Token = token.Token;
 			ExpirationTime = token.ExpirationTime;
 		}
@@ -26,6 +27,8 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		[EmailAddress]
 		public string Email { get; }
+
+		public DateTime JoinedOn { get; }
 
 		public string Token { get; set; }
 

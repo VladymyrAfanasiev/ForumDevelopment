@@ -38,7 +38,7 @@ function RegisterPage() {
         const email = document.getElementById("registerPage_email").value;
         const result = await authService.registerAsync(userName, email, password);
         if (result.status) {
-            const authUserInfo = await authService.getAuthenticationInfo();
+            const authUserInfo = authService.getAuthenticationInfo();
             dispatch(setAuthUserInfo(authUserInfo));
             navigate("/");
         }

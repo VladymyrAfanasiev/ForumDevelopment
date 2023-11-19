@@ -29,7 +29,7 @@ class AuthService {
                 isAuthenticated: true,
                 user: {
                     id: response.data.id,
-                    name: response.data.userName,
+                    userName: response.data.userName,
                     email: response.data.email
                 }
             };

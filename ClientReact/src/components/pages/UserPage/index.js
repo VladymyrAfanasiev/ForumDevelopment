@@ -55,7 +55,7 @@ function UserPage() {
                     <div className="userPage_shortDescription">
                         <p>User name: {userInfo.userName}</p>
                         <p>Email: {userInfo.email}</p>
-                        <p>Joined date:</p>
+                        <p>Joined date: {userInfo.joinedOn}</p>
                     </div>
                 </div>
                 <div>

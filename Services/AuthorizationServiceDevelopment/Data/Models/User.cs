@@ -19,6 +19,8 @@ namespace AuthorizationServiceDevelopment.Data.Models
 		[EmailAddress]
 		public string Email { get; set; }
 
+		public DateTime JoinedOn { get; set; }
+
 		public RoleNames Role { get; set;}
 
 	}

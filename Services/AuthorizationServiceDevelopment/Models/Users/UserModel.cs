@@ -15,6 +15,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 			this.Id = dbModel.Id;
 			this.UserName = dbModel.UserName;
 			this.Email = dbModel.Email;
+			this.JoinedOn = dbModel.JoinedOn;
 		}
 
 		public int Id { get; set; }
@@ -24,6 +25,8 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		[EmailAddress]
 		public string Email { get; set; }
+
+		public DateTime JoinedOn { get; set; }
 
 		public User ToEntry()
 		{
