@@ -1,13 +1,16 @@
 import { React, useState } from "react";
 import { useTranslation, withTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next/icu.macro';
+import { useNavigate } from "react-router-dom";
 
 import MainFrame from '../../common/MainFrame';
+import forumService from '../../../services/ForumService';
 
 import './RequestCreateNewGroupPage.css';
 
 function RequestCreateNewGroupPage() {
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
     const [isDataFilled, setIsDataFilled] = useState(false);
     
     function handleDataChange() {
@@ -18,6 +21,19 @@ function RequestCreateNewGroupPage() {
         }
 
         setIsDataFilled(true);
+    }
+
+    const sendClick = async function () {
+        const name = document.getElementById("requestCreateNewGroupPage_name").value;
+        const description = document.getElementById("requestCreateNewGroupPage_description").value;
+
+        const result = await forumService.addNewGroup(name, description);
+        if (result.status) {
+            navigate('/');
+        }
+        else {
+            alert(result.message);
+        }
     }
 
     return (
@@ -35,13 +51,13 @@ function RequestCreateNewGroupPage() {
                             <Trans>Description</Trans>
                         </b>
                     </label>
-                    <input type="text" placeholder={t("Enter group description")} onChange={handleDataChange}></input>
+                    <input id="requestCreateNewGroupPage_description" type="text" placeholder={t("Enter group description")} onChange={handleDataChange}></input>
 
 
                     <div className="requestCreateNewGroupPage_buttonContainer">
                         {
                             isDataFilled ? (
-                                <button className="root_button">
+                                <button className="root_button" onClick={sendClick}>
                                     <Trans>Send</Trans>
                                 </button>
                             ) : (

@@ -8,6 +8,10 @@
 
 		public string Text { get; set; }
 
+		public int AuthorId { get; set; }
+
+		public DateTime CreatedOn { get; set; }
+
 		public List<Comment> Comments { get; set; } = new List<Comment>();
 
 

@@ -1,4 +1,6 @@
-﻿using AuthorizationServiceDevelopment.Data.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using AuthorizationServiceDevelopment.Data.Models;
+using AuthorizationServiceDevelopment.Models.Tokens;
 
 namespace AuthorizationServiceDevelopment.Models.Users
 {
@@ -9,16 +11,24 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		}
 
-		public UserAutorizedModel(string userName, string token, DateTime expirationTime)
+		public UserAutorizedModel(UserModel userModel, AccessToken token)
 		{
-			UserName = userName;
-			Token = token;
-			ExpirationTime = expirationTime;
+			Id = userModel.Id;
+			UserName = userModel.UserName;
+			Email = userModel.Email;
+			Token = token.Token;
+			ExpirationTime = token.ExpirationTime;
 		}
+
+		public int Id { get; }
 
 		public string UserName { get; }
 
+		[EmailAddress]
+		public string Email { get; }
+
 		public string Token { get; set; }
+
 		public DateTime ExpirationTime { get; }
 
 		public User ToEntry()

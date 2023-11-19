@@ -17,12 +17,13 @@ namespace AuthorizationServiceDevelopment.Services.Authentication
 			this.configuration = configuration;
 		}
 
-		public AccessToken Generate(UserAuthenticationModel model)
+		public AccessToken Generate(UserModel userModel)
 		{
 			List<Claim> claims = new List<Claim>()
 			{
-				new Claim(ClaimTypes.Email, model.Email),
-				new Claim(ClaimTypes.Name, model.UserName)
+				new Claim(ClaimTypes.NameIdentifier, userModel.Id.ToString()),
+				new Claim(ClaimTypes.Name, userModel.UserName),
+				new Claim(ClaimTypes.Email, userModel.Email),
 			};
 
 			DateTime expirationDateTime = DateTime.UtcNow.AddMinutes(configuration.AccessTokenExpirationMinutes);

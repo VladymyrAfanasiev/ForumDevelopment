@@ -10,6 +10,7 @@ namespace ForumServiceDevelopment.Models
 			Id= model.Id;
 			Name = model.Name;
 			Description = model.Description;
+			AuthorId = model.AuthorId;
 			Posts = model.Posts.ConvertAll(p => new PostSimpleModel(p));
 		}
 
@@ -18,6 +19,8 @@ namespace ForumServiceDevelopment.Models
 		public string Name { get; set; }
 
 		public string Description { get; set; }
+
+		public int AuthorId { get; set; }
 
 		public List<PostSimpleModel> Posts { get; set; }
 

@@ -13,9 +13,9 @@ class Comment extends React.Component {
                 <div className="comment_body">
                     <div className="comment_title">
                         <div className="comment_autor">
-                            <Link to={"/user/" + this.props.comment.author.name}>
+                            <Link to={"/user/" + this.props.comment.authorId}>
                                 {
-                                    this.props.comment.author.name
+                                    this.props.comment.authorId
                                 }
                             </Link>
                            
@@ -23,7 +23,7 @@ class Comment extends React.Component {
                         <div className="comment_date">
                             <span >
                                 {
-                                    new Date().toJSON().slice(0,10)
+                                    this.props.comment.createdOn
                                 }
                             </span>
                         </div>
@@ -31,7 +31,7 @@ class Comment extends React.Component {
                     <div className="comment_text">
                             <span>
                                 {
-                                    this.props.comment.comment
+                                    this.props.comment.text
                                 }
                             </span>
                     </div>

@@ -1,13 +1,16 @@
 import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import { useTranslation, withTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next/icu.macro';
 
 import MainFrame from '../../common/MainFrame';
+import forumService from '../../../services/ForumService';
 
 import './AddNewGroupItemPage.css';
 
 function AddNewGroupItemPage() {
+    const navigate = useNavigate();
     const params = useParams();
     const { t, i18n } = useTranslation();
     const [isDataFilled, setIsDataFilled] = useState(false);
@@ -26,6 +29,19 @@ function AddNewGroupItemPage() {
         }
 
         setIsDataFilled(true);
+    }
+
+    const sendClick = async function () {
+        const newPostName = document.getElementsByClassName("addNewGroupItemPage_itemName")[0].value;
+        const newPostText = document.getElementsByClassName("addNewGroupItemPage_itemContent")[0].value;
+
+        const result = await forumService.addNewGroupItem(params.id, newPostName, newPostText);
+        if (result.status) {
+            navigate('/group/-1/post/' + result.data.id);
+        }
+        else {
+            alert(result.message);
+        }
     }
 
     return (
@@ -48,7 +64,7 @@ function AddNewGroupItemPage() {
                     <div className="addNewGroupItemPage_buttonContainer">
                         {
                             isDataFilled ? (
-                                <button className="root_button">
+                                <button className="root_button" onClick={sendClick}>
                                     <Trans>Send</Trans>
                                 </button>
                             ) : (

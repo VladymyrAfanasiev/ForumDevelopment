@@ -18,15 +18,12 @@ namespace ForumServiceDevelopment.Services
 
 		public List<GroupSimpleModel> GetGroups()
 		{
-			return this.databaseContext.Groups.Select(g => new GroupSimpleModel(g)).ToList();
+			return this.databaseContext.Groups.Include(g => g.Posts).Select(g => new GroupSimpleModel(g)).ToList();
 		}
 
 		public GroupFullModel GetGroupById(int groupId)
 		{
-			Group group = this.databaseContext.Groups
-				.Include(g => g.Posts)
-				.FirstOrDefault(gi => gi.Id == groupId);
-
+			Group group = this.databaseContext.Groups.Include(g => g.Posts).FirstOrDefault(gi => gi.Id == groupId);
 			if (group == null)
 			{
 				return null;
@@ -35,22 +32,9 @@ namespace ForumServiceDevelopment.Services
 			return new GroupFullModel(group);
 		}
 
-		public GroupFullModel AddGroup(GroupCreationModel model)
-		{
-			Group newGroup = model.ToEntity();
-
-			this.databaseContext.Groups.Add(newGroup);
-			this.databaseContext.SaveChanges();
-
-			return new GroupFullModel(newGroup);
-		}
-
-
 		public PostFullModel GetPostById(int postId)
 		{
-			Post post = this.databaseContext.Posts
-				.Include(g => g.Comments)
-				.FirstOrDefault(gi => gi.Id == postId);
+			Post post = this.databaseContext.Posts.Include(g => g.Comments).FirstOrDefault(gi => gi.Id == postId);
 			if (post == null)
 			{
 				return null;
@@ -59,7 +43,25 @@ namespace ForumServiceDevelopment.Services
 			return new PostFullModel(post);
 		}
 
-		public PostFullModel AddPost(int groupId, PostCreationModel model)
+
+		public GroupFullModel AddGroup(GroupCreationModel model, int authorId)
+		{
+			Group existedGroup = this.databaseContext.Groups.FirstOrDefault(g => g.Name == model.Name);
+			if (existedGroup != null)
+			{
+				return null;
+			}
+
+			Group newGroup = model.ToEntity();
+			newGroup.AuthorId = authorId;
+
+			this.databaseContext.Groups.Add(newGroup);
+			this.databaseContext.SaveChanges();
+
+			return new GroupFullModel(newGroup);
+		}
+
+		public PostFullModel AddPost(int groupId, PostCreationModel model, int authorId)
 		{
 			Group group = this.databaseContext.Groups.FirstOrDefault(gi => gi.Id == groupId);
 			if (group == null)
@@ -69,6 +71,7 @@ namespace ForumServiceDevelopment.Services
 
 			Post newPost = model.ToEntity();
 			newPost.GroupId = group.Id;
+			newPost.AuthorId = authorId;
 
 			this.databaseContext.Posts.Add(newPost);
 			this.databaseContext.SaveChanges();
@@ -76,8 +79,7 @@ namespace ForumServiceDevelopment.Services
 			return new PostFullModel(newPost);
 		}
 
-
-		public CommentModel AddComment(int postId, CommentCreationModel model)
+		public CommentModel AddComment(int postId, CommentCreationModel model, int authorId)
 		{
 			Post post = this.databaseContext.Posts.FirstOrDefault(gi => gi.Id == postId);
 			if (post == null)
@@ -87,6 +89,7 @@ namespace ForumServiceDevelopment.Services
 
 			Comment newComment = model.ToEntity();
 			newComment.PostId = post.Id;
+			newComment.AuthorId = authorId;
 
 			this.databaseContext.Comments.Add(newComment);
 			this.databaseContext.SaveChanges();

@@ -34,7 +34,7 @@ namespace APIGatewayServiceDevelopment
 			}
 
 			app.UseRouting();
-
+			app.UseMiddleware<OptionsMiddleware>();
 			app.UseMiddleware<ErrorHandlerMiddleware>();
 
 			MicroservicesConfigurations microservicesConfigurations = new MicroservicesConfigurations();

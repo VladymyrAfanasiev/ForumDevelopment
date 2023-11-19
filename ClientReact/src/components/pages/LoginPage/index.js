@@ -20,12 +20,16 @@ function LoginPage() {
     }
 
     const loginClick = async function () {
-        const userName = document.getElementById("loginPage_userName").value;
-        const success = await authService.loginAsync(userName);
-        if (success) {
+        const email = document.getElementById("loginPage_email").value;
+        const password = document.getElementById("loginPage_password").value;
+        const result = await authService.loginAsync(email, password);
+        if (result.status) {
             const authUserInfo = authService.getAuthenticationInfo();
             dispatch(setAuthUserInfo(authUserInfo));
-            navigate("/");
+            navigate(-1);
+        }
+        else {
+            alert(result.message);
         }
     }
 
@@ -33,16 +37,16 @@ function LoginPage() {
         <div className="loginPage_container">
             <label>
                 <b>
-                    <Trans>Username</Trans>
+                    <Trans>Email</Trans>
                 </b>
             </label>
-            <input id="loginPage_userName" type="text" placeholder={t("Enter Username")} onChange={handleLoginFormChange}></input>
+            <input id="loginPage_email" type="text" placeholder={t("Enter Username")} onChange={handleLoginFormChange}></input>
             <label>
                 <b>
                     <Trans>Password</Trans>
                 </b>
             </label>
-            <input type="text" placeholder={t("Enter Password")}></input>
+            <input id="loginPage_password" type="text" placeholder={t("Enter Password")}></input>
             <div className="loginPage_buttonContainer">
                 {
                     isLoginFormEmpty ? (

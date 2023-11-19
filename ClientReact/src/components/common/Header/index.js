@@ -86,12 +86,12 @@ function Header() {
                             <div className="header_dropdown">
                                 <button className="root_button">
                                     {
-                                        authUserInfo?.user?.name
+                                        authUserInfo?.user?.userName
                                     }
                                 </button>
                                 <ul className="header_menu_dropdown" id="header_menu_dropdown">
                                     <li>
-                                        <Link className="root_a_button" to={ "/user/" + authUserInfo?.user?.name }>
+                                        <Link className="root_a_button" to={ "/user/" + authUserInfo?.user?.id }>
                                             {
                                                 t("Profile")
                                             }

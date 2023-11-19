@@ -1,4 +1,5 @@
 ﻿using ForumServiceDevelopment.Data.Models;
+using ForumServiceDevelopment.Models.Posts;
 
 namespace ForumServiceDevelopment.Models
 {
@@ -9,6 +10,7 @@ namespace ForumServiceDevelopment.Models
 			Id = model.Id;
 			Name = model.Name;
 			Description = model.Description;
+			Posts = model.Posts.Select(p => new PostSimpleModel(p)).ToList();
 		}
 
 		public int Id { get; set; }
@@ -16,6 +18,8 @@ namespace ForumServiceDevelopment.Models
 		public string Name { get; set; }
 
 		public string Description { get; set; }
+
+		public List<PostSimpleModel> Posts { get; set; }
 
 		public Group ToEntity()
 		{

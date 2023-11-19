@@ -50,6 +50,8 @@ namespace AuthorizationServiceDevelopment
 			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<AccessTokenGenerator>();
 			services.AddTransient<Authenticator>();
+
+			services.AddCors();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -57,6 +59,7 @@ namespace AuthorizationServiceDevelopment
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseCors(builder => builder.AllowAnyOrigin());
 			}
 
 			app.UseRouting();

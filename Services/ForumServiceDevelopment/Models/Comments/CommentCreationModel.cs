@@ -23,7 +23,8 @@ namespace ForumServiceDevelopment.Models.Comments
 		{
 			return new Comment
 			{
-				Text = Text
+				Text = Text,
+				CreatedOn= DateTime.Now
 			};
 		}
 	}

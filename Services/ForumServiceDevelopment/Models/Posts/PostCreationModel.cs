@@ -27,7 +27,8 @@ namespace ForumServiceDevelopment.Models.Posts
 			return new Post
 			{
 				Name = Name,
-				Text = Text
+				Text = Text,
+				CreatedOn = DateTime.Now
 			};
 		}
 	}

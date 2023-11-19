@@ -1,4 +1,5 @@
-import { React, useState } from "react";
+import { React } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { withTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next/icu.macro';
@@ -6,11 +7,28 @@ import { Trans } from 'react-i18next/icu.macro';
 import MaineFrame from '../../common/MainFrame';
 import MainFrameSeparator from '../../common/MainFrameSeparator';
 
+import authService from '../../../services/AuthService';
+
 import "./UserPage.css";
 
 function UserPage(props) {
     const params = useParams();
+    const [userInfo, setUserInfo] = useState({});
     const [activeTab, setActiveTab] = useState('Profile');
+
+    useEffect(() => {
+        async function loadUserInfo() {
+            const result = await authService.getUserInfo(params.id);
+            if (result.status) {
+                setUserInfo(result.data);
+            }
+            else {
+                alert(result.message);
+            }
+        }
+
+        loadUserInfo();
+    }, [params])
 
     const handleTabClick = (e) => {
         if (e.target.className.includes("root_button_active")) {
@@ -33,9 +51,9 @@ function UserPage(props) {
                         <img src="/img/anon.png" />
                     </div>
                     <div className="userPage_shortDescription">
-                        <p>{params.id}</p>
-                        <p>Email</p>
-                        <p>Joined date</p>
+                        <p>User name: {userInfo.userName}</p>
+                        <p>Email: {userInfo.email}</p>
+                        <p>Joined date:</p>
                     </div>
                 </div>
                 <div>

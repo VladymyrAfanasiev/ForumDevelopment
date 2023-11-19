@@ -8,6 +8,10 @@
 
 		public string Description { get; set; }
 
+		public int AuthorId { get; set; }
+
+		public DateTime CreatedOn { get; set; }
+
 		public List<Post> Posts { get; set; } = new List<Post>();
 	}
 }

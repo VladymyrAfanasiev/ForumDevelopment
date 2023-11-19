@@ -10,6 +10,7 @@ namespace ForumServiceDevelopment.Models.Posts
 			Id= model.Id;
 			Name = model.Name;
 			Text = model.Text;
+			AuthorId = model.AuthorId;
 			Comments = model.Comments.ConvertAll(c => new CommentModel(c));
 		}
 
@@ -18,6 +19,8 @@ namespace ForumServiceDevelopment.Models.Posts
 		public string Name { get; set; }
 
 		public string Text { get; set; }
+
+		public int AuthorId { get; set; }
 
 		public List<CommentModel> Comments { get; set; }
 

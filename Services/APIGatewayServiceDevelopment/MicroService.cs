@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace APIGatewayServiceDevelopment
 {
@@ -24,7 +26,7 @@ namespace APIGatewayServiceDevelopment
 			{
 				using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
 				{
-					requestContent = readStream.ReadToEnd();
+					requestContent = await readStream.ReadToEndAsync();
 				}
 			}
 

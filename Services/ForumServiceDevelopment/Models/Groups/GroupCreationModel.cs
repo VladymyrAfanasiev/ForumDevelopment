@@ -27,7 +27,8 @@ namespace ForumServiceDevelopment.Models
 			return new Group
 			{
 				Name = Name,
-				Description = Description
+				Description = Description,
+				CreatedOn = DateTime.Now
 			};
 		}
 	}

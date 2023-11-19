@@ -10,23 +10,23 @@ class GroupItem extends React.Component {
                 <img width={40} height={40} src="/img/forum.svg" alt="" />
                 <div className="groupItemInfo">
                     <h4>
-                        <Link to="/forumItem">
+                        <Link to={"/group/" + -1 + "/post/" + this.props.post.id}>
                             {
-                                this.props.groupItem.itemName
+                                this.props.post.name
                             }
                         </Link >
                     </h4>
                     <p>
                         {
-                            this.props.groupItem.description
+                            this.props.post.description
                         }
                     </p>
                 </div>
                 <div className="groupItemCommentsCount">100</div>
                 <div className="groupItemAuthor">
-                    <Link to={"/user/" + this.props.groupItem.author}>
+                    <Link to={"/user/" + this.props.post.author}>
                         {
-                            this.props.groupItem.author
+                            this.props.post.author
                         }
                     </Link>
                 </div>

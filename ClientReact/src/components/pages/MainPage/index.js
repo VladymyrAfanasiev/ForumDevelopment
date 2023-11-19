@@ -13,8 +13,13 @@ function MainPage() {
 
     useEffect(() => {
         async function loadGroups() {
-            const loadedGroups = await forumService.getGroups();
-            setGroups(loadedGroups)
+            const result = await forumService.getGroups();
+            if (result.status) {
+                setGroups(result.data)
+            }
+            else {
+                alert(result.message);
+            }
         }
 
         loadGroups();

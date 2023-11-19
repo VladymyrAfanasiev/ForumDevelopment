@@ -12,11 +12,12 @@ namespace AuthorizationServiceDevelopment.Services.Authentication
 			this.accessTokenGenerator = accessTokenGenerator;
 		}
 
-		public UserAutorizedModel Authenticate(UserAuthenticationModel authorizationModel)
+		public UserAutorizedModel Authenticate(UserModel userModel)
 		{
-			AccessToken token = this.accessTokenGenerator.Generate(authorizationModel);
+			AccessToken token = this.accessTokenGenerator.Generate(userModel);
 
-			return new UserAutorizedModel(authorizationModel.UserName, token.Token, token.ExpirationTime);
+			return new UserAutorizedModel(userModel, token);
 		}
+
 	}
 }

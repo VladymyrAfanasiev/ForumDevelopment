@@ -19,8 +19,13 @@ import AdminPage from './components/pages/AdminPage';
 import { AuthLayout } from './layouts/AuthLayout';
 import reportWebVitals from './reportWebVitals';
 
+import axios from 'axios';
+import config from './config.js'
+
 import './i18n';
 import './index.css';
+
+axios.defaults.baseURL = config.ServerUrl;
 
 function BasicLayout() {
   return (
@@ -49,7 +54,7 @@ root.render(
             <Route path="register" element={<RegisterPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="group/:id" element={<GroupPage />} />
-            <Route path="forumItem" element={<GroupItemPage />} />
+            <Route path="group/:groupId/post/:postId" element={<GroupItemPage />} />
             <Route element={<AuthLayout />}>
               <Route path="requestCreateNewGroup" element={<RequestCreateNewGroupPage />} />
               <Route path="addNewGroupItem/:id" element={<AddNewGroupItemPage />} />

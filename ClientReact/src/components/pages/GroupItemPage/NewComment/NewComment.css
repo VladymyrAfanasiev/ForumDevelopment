@@ -4,11 +4,11 @@
     margin: 10px 0px;
 }
 
-.newComment_text {
+.newComment_container {
     margin-bottom: 5px;
 }
 
-.newComment_text>textarea {
+.newComment_text {
     width: calc(100% - 6px);
     min-width: calc(100% - 6px);
     max-width: calc(100% - 6px);

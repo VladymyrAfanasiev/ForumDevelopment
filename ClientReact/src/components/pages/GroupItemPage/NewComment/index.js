@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate  } from "react-router-dom";
 import { useTranslation, withTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next/icu.macro';
 
 import "./NewComment.css";
 
-import authService from '../../../../services/AuthService';
-
-function NewComment() {
-    const navigate = useNavigate();
+function NewComment(params) {
     const { t, i18n } = useTranslation();
     const [isNewCommentEmpty, setIsNewCommentEmpty] = useState(true);
 
@@ -17,16 +13,14 @@ function NewComment() {
     }
     
     const addNewCommentClicked = async function () {
-        const authenticationInfo = await authService.getAuthenticationInfoAsync();
-        if (!authenticationInfo.isAuthenticated) {
-            navigate('/login');
-        }
+        const text = document.getElementsByClassName("newComment_text")[0].value;
+        await params.addNewCommentHandler(text);
     }
 
     return (
         <div className="newComment_content">
-            <div className="newComment_text">
-                <textarea type="text" placeholder={t("Enter a comment")} onChange={handleNewCommentChange}></textarea>
+            <div className="newComment_container">
+                <textarea className="newComment_text" type="text" placeholder={t("Enter a comment")} onChange={handleNewCommentChange}></textarea>
             </div>
             <div className="newComment_sendButton">
                 {

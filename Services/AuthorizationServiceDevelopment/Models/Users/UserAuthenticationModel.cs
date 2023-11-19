@@ -12,28 +12,20 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		public UserAuthenticationModel(User dbModel)
 		{
-			this.UserName = dbModel.UserName;
-			this.Password = dbModel.Password;
 			this.Email = dbModel.Email;
+			this.Password = dbModel.Password;
 		}
 
-		[Required]
-		public string UserName { get; set; }
-
-		[Required]
-		public string Password { get; set; }
-
-		[Required]
-		[EmailAddress]
 		public string Email { get; set; }
+
+		public string Password { get; set; }
 
 		public User ToEntry()
 		{
 			return new User
 			{
-				UserName = UserName,
-				Password = Password,
-				Email = Email
+				Email = Email,
+				Password = Password
 			};
 		}
 	}

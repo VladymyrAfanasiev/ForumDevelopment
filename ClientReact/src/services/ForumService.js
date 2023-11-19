@@ -1,147 +1,153 @@
-export class ForumService {
+import axios from 'axios';
+
+class ForumService {
     constructor () {
-        this.groupsToTest = [
-            {
-                groupName: "Group 1",
-                groupItems: [
-                    {
-                        itemName: "Name 1",
-                        description: "Description 1...",
-                        author: "Author 1"
-                    },
-                    {
-                        itemName: "Name 2",
-                        author: "Author 2"
-                    }
-                ]
-            },
-            {
-                groupName: "Group 2",
-                groupItems: [
-                    {
-                        itemName: "Name 1",
-                        author: "Author 1"
-                    },
-                    {
-                        itemName: "Name 2",
-                        author: "Author 2"
-                    },
-                    {
-                        itemName: "Name 3",
-                        author: "Author 3"
-                    },
-                    {
-                        itemName: "Name 4",
-                        author: "Author 4"
-                    },
-                    {
-                        itemName: "Name 5",
-                        author: "Author 5"
-                    }
-                ]
-            },
-            { 
-                groupName: "Group 3",
-                groupItems: []
-            },
-            {
-                groupName: "Group 4",
-                groupItems: [
-                    {
-                        itemName: "Name 1",
-                        author: "Author 1"
-                    },
-                    {
-                        itemName: "Name 2",
-                        author: "Author 2"
-                    },
-                    {
-                        itemName: "Name 3",
-                        author: "Author 3"
-                    }
-                ]
-            },
-            {
-                groupName: "Group 5",
-                groupItems: [
-                    {
-                        itemName: "Name 1",
-                        author: "Author 1"
-                    },
-                    {
-                        itemName: "Name 2",
-                        author: "Author 2"
-                    },
-                    {
-                        itemName: "Name 3",
-                        author: "Author 3"
-                    },
-                    {
-                        itemName: "Name 4",
-                        author: "Author 4"
-                    },
-                    {
-                        itemName: "Name 5",
-                        author: "Author 5"
-                    }
-                ]
-            }
-        ];
 
-        this.groupItemToTest = {
-            itemName: "Name 1",
-            content: "Here is some content of the group item.",
-            author: 
-            {
-                name: "User 1"
-            },
-            comments: [
-                {
-                    author: 
-                    {
-                        srt: "",
-                        name: "User 1"
-                    },
-                    comment: "Some comment 1"
-                },
-                {
-                    author:
-                    {
-                        srt: "",
-                        name: "User 2"
-                    },
-                    comment: ".............................. .............................. .............................. ..................................... ....................................... ........................................ ........................................ .............................. ..................................... ....................................... ........................................ ........................................ .............................. ..................................... ....................................... ........................................ ........................................"
-                },
-                {
-                    author:
-                    {
-                        srt: "",
-                        name: "User 3"
-                    },
-                    comment: "Some comment 3"
-                }
-            ]
-        };
-
-        this.authorToTest = {
-
-        };
     }
-    
-    async getGroups () {
-        return this.groupsToTest;
+
+    async getGroups() {
+        try {
+            const response = await axios.get('/api/group', {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
     }
 
     async getGroupById(id) {
-        return this.groupsToTest.find(g => g.groupName === id)
+        try {
+            const response = await axios.get('/api/group/' + id, {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
     }
 
-    async getGroupItemById(id) {
-        return this.groupItemToTest;
+    async getGroupItemById(groupId, postId) {
+        try {
+            const response = await axios.get('/api/group/' + groupId + '/post/' + postId, {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
     }
 
-    async getAuthor(){
-        return this.authorToTest;
+    async addNewGroup(name, description) {
+        try {
+            const data = {
+                Name: name,
+                Description: description
+            };
+
+            const response = await axios.put('/api/group', data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async addNewGroupItem(groupId, postName, text) {
+        try {
+            const data = {
+                name: postName,
+                text: text
+            };
+
+            const response = await axios.put('/api/group/' + groupId + '/post', data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async addComment(postId, text) {
+        try {
+            const data = {
+                text: text
+            };
+
+            const response = await axios.put('/api/group/' + -1 + '/post/' + postId + '/comment', data , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
     }
 }
 

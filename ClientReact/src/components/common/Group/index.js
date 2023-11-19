@@ -11,24 +11,24 @@ function Group(props) {
     return (
         <div className="mainGroup">
             <h2 className="mainGroupName">
-                <Link to={'/group/' + props.group.groupName}>
+                <Link to={'/group/' + props.group.id}>
                     {
-                        props.group.groupName
+                        props.group.name
                     }
                 </Link>
-                <Link title={t("Add new group item")} className="addNewGroup_a_button" to={'/addNewGroupItem/' + props.group.groupName}></Link>
+                <Link title={t("Add new group item")} className="addNewGroup_a_button" to={'/addNewGroupItem/' + props.group.id}></Link>
             </h2>
             <div className="groupItemsContainer">
                 <ol>
                     {
                         props.simpleView ?
-                            props.group.groupItems.slice(0, 3).map(groupItem => <li><GroupItem groupItem={groupItem} /></li>) :
-                            props.group.groupItems.map(groupItem => <li><GroupItem groupItem={groupItem} /></li>)
+                            props.group.posts.slice(0, 3).map(post => <li><GroupItem post={post} /></li>) :
+                            props.group.posts.map(post => <li><GroupItem post={post} /></li>)
                     }
                     {
-                        props.simpleView && props.group.groupItems.length > 3 ? (
+                        props.simpleView && props.group.posts.length > 3 ? (
                             <li className="groupItemsContainer_openMove">
-                                <Link className="root_a_button" to={'/group/' + props.group.groupName}>
+                                <Link className="root_a_button" to={'/group/' + props.group.id}>
                                     {
                                         t("Open more items...")
                                     }

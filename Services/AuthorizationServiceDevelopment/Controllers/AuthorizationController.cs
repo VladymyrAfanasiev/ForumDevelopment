@@ -26,13 +26,18 @@ namespace AuthorizationServiceDevelopment.Controllers
 				return BadRequest();
 			}
 
+			if (userService.CheckUserExistance(creationModel))
+			{
+				return Conflict("User already exist");
+			}
+
 			UserModel userModel = userService.CreateUser(creationModel);
 			if (userModel == null)
 			{
 				return Unauthorized();
 			}
 
-			return Ok("Registered");
+			return Ok(authenticator.Authenticate(userModel));
 		}
 
 		[HttpPost("login")]
@@ -49,9 +54,19 @@ namespace AuthorizationServiceDevelopment.Controllers
 				return Unauthorized();
 			}
 
-			UserAutorizedModel userAutorizedModel = authenticator.Authenticate(authorizationModel);
+			return Ok(authenticator.Authenticate(userModel));
+		}
 
-			return Ok(userAutorizedModel);
+		[HttpGet("user/{userId:int}")]
+		public IActionResult GetUserById(int userId)
+		{
+			UserModel userModel = this.userService.GetUser(userId);
+			if (userModel == null)
+			{
+				return NotFound("User not found");
+			}
+
+			return Ok(userModel);
 		}
 
 		[HttpPost("refresh")]

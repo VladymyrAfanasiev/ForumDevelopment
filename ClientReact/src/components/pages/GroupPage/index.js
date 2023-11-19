@@ -13,8 +13,13 @@ function GroupPage() {
 
     useEffect(() => {
         async function loadGroupItems() {
-            const group = await forumService.getGroupById(params.id);
-            setGroup(group);
+            const result = await forumService.getGroupById(params.id);
+            if (result.status) {
+                setGroup(result.data);
+            }
+            else {
+                alert(result.message);
+            }
         }
 
         loadGroupItems();
