@@ -1,76 +1,85 @@
 :root {
-  --theme-color: #33649B;
+    --theme-color: #33649B;
+}
+
+html {
+    height: 100%;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .root_border {
-  background-color: aliceblue;
+    background-color: aliceblue;
 }
 
 .root_content {
-  background-color: white;
-  margin-left: 22%;
-  margin-right: 22%;
-  min-height: calc(100vh - 89px);
+    height: 100%;
+    background-color: white;
+    margin-left: 22%;
+    margin-right: 22%;
+    min-height: calc(100vh - 89px);
 }
 
 .root_a_button {
-  padding: 10px 25px;
-  align-self: center;
-  text-decoration: none;
-  background-color: white;
-  color: var(--theme-color);
-  font-size: 16px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px 25px;
+    align-self: center;
+    text-decoration: none;
+    background-color: white;
+    color: var(--theme-color);
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .root_a_button_disabled {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .root_a_button:hover {
-  background-color: var(--theme-color);
-  color: white;
+    background-color: var(--theme-color);
+    color: white;
 }
 
 .root_button {
-  padding: 10px 25px;
-  cursor: pointer;
-  border: 0px;
-  background-color: white;
-  color: var(--theme-color);
-  font-size: 16px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px 25px;
+    cursor: pointer;
+    border: 0px;
+    background-color: white;
+    color: var(--theme-color);
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .root_button_disabled {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .root_button:hover {
-  background-color: var(--theme-color);
-  color: white;
+    background-color: var(--theme-color);
+    color: white;
 }
 
 .root_button_active {
-  padding: 10px 25px;
-  cursor: pointer;
-  border: 0px;
-  background-color: var(--theme-color);
-  color: white;
-  font-size: 16px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px 25px;
+    cursor: pointer;
+    border: 0px;
+    background-color: var(--theme-color);
+    color: white;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
