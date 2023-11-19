@@ -30,7 +30,7 @@ namespace AuthorizationServiceDevelopment.Services
 
 		public UserModel GetUser(UserAuthenticationModel authorizationModel)
 		{
-			User dbModel = dbContext.Users.FirstOrDefault(u => u.Email == authorizationModel.Email);
+			User dbModel = dbContext.Users.FirstOrDefault(u => u.Email == authorizationModel.Email && u.Password == authorizationModel.Password);
 
 			return dbModel == null ? null : new UserModel(dbModel);
 		}

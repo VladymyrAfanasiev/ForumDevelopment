@@ -88,7 +88,7 @@ class AuthService {
 
             return {
                 status: false,
-                message: error.message
+                message: error.response.data
             };
         }
     }

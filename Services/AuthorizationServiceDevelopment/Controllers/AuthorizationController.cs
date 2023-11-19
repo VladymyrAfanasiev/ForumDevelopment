@@ -1,6 +1,7 @@
 ﻿using AuthorizationServiceDevelopment.Models.Users;
 using AuthorizationServiceDevelopment.Services;
 using AuthorizationServiceDevelopment.Services.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthorizationServiceDevelopment.Controllers
@@ -34,7 +35,7 @@ namespace AuthorizationServiceDevelopment.Controllers
 			UserModel userModel = userService.CreateUser(creationModel);
 			if (userModel == null)
 			{
-				return Unauthorized();
+				return BadRequest("Fail to create a new user");
 			}
 
 			return Ok(authenticator.Authenticate(userModel));
@@ -51,7 +52,7 @@ namespace AuthorizationServiceDevelopment.Controllers
 			UserModel userModel = this.userService.GetUser(authorizationModel);
 			if (userModel == null)
 			{
-				return Unauthorized();
+				return NotFound("User email or password is wrong");
 			}
 
 			return Ok(authenticator.Authenticate(userModel));

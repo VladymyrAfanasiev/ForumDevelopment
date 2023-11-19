@@ -14,6 +14,7 @@ function RegisterPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [userImage, setUserImage] = useState(undefined);
+    const [isLoading, setIsLoading] = useState(false);
 
     function imageSelectionHandler(e) {
         setUserImage(e.target.files[0]);
@@ -24,6 +25,8 @@ function RegisterPage() {
     }
 
     const registerClick = async function () {
+        setIsLoading(true);
+
         const password = document.getElementById("registerPage_Password").value;
         const confirmPassword = document.getElementById("registerPage_confirmPassword").value;
         if (password != confirmPassword) {
@@ -45,6 +48,8 @@ function RegisterPage() {
         else {
             alert(result.message);
         }
+
+        setIsLoading(false);
     }
 
     return (
@@ -82,9 +87,17 @@ function RegisterPage() {
             <input id="registerPage_email" type="text" placeholder={t("Enter Email Address")}></input>
 
             <div className="registerPage_buttonContainer">
-                <button className="root_button" onClick={registerClick}>
-                    <Trans>Register</Trans>
-                </button>
+                {
+                    isLoading ? (
+                        <button className="root_button_loading">
+                            <Trans>Register</Trans>
+                        </button>
+                    ) : (
+                        <button className="root_button" onClick={registerClick}>
+                            <Trans>Register</Trans>
+                        </button>
+                    )
+                }
             </div>
         </div>
     );

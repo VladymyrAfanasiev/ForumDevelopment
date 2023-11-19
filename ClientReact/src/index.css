@@ -1,5 +1,6 @@
 :root {
     --theme-color: #33649B;
+    --theme-color-2: #28507c;
 }
 
 html {
@@ -63,6 +64,40 @@ code {
     color: var(--theme-color);
     font-size: 16px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.root_button_loading {
+    padding: 10px 25px;
+    cursor: wait;
+    border: 0px;
+    position: relative;
+    background-color: var(--theme-color);
+    color: white;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 18px 40px hsla(231, 56%, 56%, .3);
+    overflow: hidden;
+}
+
+.root_button_loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    background: repeating-linear-gradient(60deg, transparent, transparent 0.75rem, var(--theme-color-2) 0.75rem, var(--theme-color-2) 1.5rem);
+    animation: root_button_load 1s infinite linear;
+}
+
+@keyframes root_button_load {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-1.75rem);
+    }
 }
 
 .root_button_disabled {

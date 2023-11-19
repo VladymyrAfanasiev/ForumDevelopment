@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation } from 'react-i18next';
 import { Trans, Plural, Select } from 'react-i18next/icu.macro';
 import { useDispatch } from 'react-redux'
@@ -14,12 +14,15 @@ function LoginPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoginFormEmpty, setIsLoginFormEmpty] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleLoginFormChange(e) {
         setIsLoginFormEmpty(e.target.value == "" ? true : false);
     }
 
     const loginClick = async function () {
+        setIsLoading(true); 
+
         const email = document.getElementById("loginPage_email").value;
         const password = document.getElementById("loginPage_password").value;
         const result = await authService.loginAsync(email, password);
@@ -31,6 +34,8 @@ function LoginPage() {
         else {
             alert(result.message);
         }
+
+        setIsLoading(false);
     }
 
     return (
@@ -49,15 +54,21 @@ function LoginPage() {
             <input id="loginPage_password" type="text" placeholder={t("Enter Password")}></input>
             <div className="loginPage_buttonContainer">
                 {
-                    isLoginFormEmpty ? (
-                        <button className="root_button root_button_disabled" onClick={loginClick}>
+                    isLoading ? (
+                        <button className="root_button_loading">
                             <Trans>Login</Trans>
                         </button>
-                    ) : (
-                        <button className="root_button" onClick={loginClick}>
-                            <Trans>Login</Trans>
-                        </button>
-                    )
+                    ): (
+                        isLoginFormEmpty? (
+                                <button className = "root_button root_button_disabled" onClick = { loginClick }>
+                                    <Trans>Login</Trans>
+                                </button>
+                            ) : (
+                                <button className="root_button" onClick={loginClick}>
+                                    <Trans>Login</Trans>
+                                </button>
+                            )
+                   )
                 }
             </div>
         </div>

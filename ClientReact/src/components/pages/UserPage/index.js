@@ -25,7 +25,7 @@ function UserPage() {
             else {
                 alert(result.message);
 
-                navigate(-1);
+                navigate('/');
             }
         }
 
