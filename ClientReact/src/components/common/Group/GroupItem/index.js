@@ -22,11 +22,11 @@ class GroupItem extends React.Component {
                         }
                     </p>
                 </div>
-                <div className="groupItemCommentsCount">100</div>
+                <div className="groupItemCommentsCount">{this.props.post.commentsCount}</div>
                 <div className="groupItemAuthor">
-                    <Link to={"/user/" + this.props.post.author}>
+                    <Link to={"/user/" + this.props.post.authorId}>
                         {
-                            this.props.post.author
+                            this.props.post.authorId
                         }
                     </Link>
                 </div>

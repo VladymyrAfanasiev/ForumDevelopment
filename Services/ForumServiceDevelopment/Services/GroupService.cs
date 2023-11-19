@@ -18,7 +18,11 @@ namespace ForumServiceDevelopment.Services
 
 		public List<GroupSimpleModel> GetGroups()
 		{
-			return this.databaseContext.Groups.Include(g => g.Posts).Select(g => new GroupSimpleModel(g)).ToList();
+			return this.databaseContext.Groups
+				.Include(g => g.Posts)
+				.ThenInclude(p => p.Comments)
+				.Select(g => new GroupSimpleModel(g))
+				.ToList();
 		}
 
 		public GroupFullModel GetGroupById(int groupId)
