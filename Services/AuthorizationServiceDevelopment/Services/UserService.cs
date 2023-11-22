@@ -1,6 +1,7 @@
 ﻿using AuthorizationServiceDevelopment.Data;
 using AuthorizationServiceDevelopment.Data.Models;
 using AuthorizationServiceDevelopment.Models.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace AuthorizationServiceDevelopment.Services
 {
@@ -13,7 +14,7 @@ namespace AuthorizationServiceDevelopment.Services
 			this.dbContext = dbContext;
 		}
 
-		public UserModel CreateUser(UserCreationModel creationModel)
+		public UserModel CreateUser(UserCreationModel creationModel, string passwordHash, string salt)
 		{
 			if (CheckUserExistance(creationModel))
 			{
@@ -21,6 +22,8 @@ namespace AuthorizationServiceDevelopment.Services
 			}
 
 			User dbCreationModel = creationModel.ToEntry();
+			dbCreationModel.PasswordHash = passwordHash;
+			dbCreationModel.Salt = salt;
 			dbCreationModel.JoinedOn = DateTime.Now;
 			dbContext.Users.Add(dbCreationModel);
 			dbContext.SaveChanges();
@@ -30,7 +33,9 @@ namespace AuthorizationServiceDevelopment.Services
 
 		public UserModel GetUser(UserAuthenticationModel authorizationModel)
 		{
-			User dbModel = dbContext.Users.FirstOrDefault(u => u.Email == authorizationModel.Email && u.Password == authorizationModel.Password);
+			User dbModel = dbContext.Users
+				.FirstOrDefault(u => u.Email == authorizationModel.Email &&
+									 u.PasswordHash == authorizationModel.PasswordHash);
 
 			return dbModel == null ? null : new UserModel(dbModel);
 		}
@@ -38,13 +43,6 @@ namespace AuthorizationServiceDevelopment.Services
 		public UserModel GetUserById(int id)
 		{
 			User dbModel = dbContext.Users.FirstOrDefault(u => u.Id == id);
-
-			return dbModel == null ? null : new UserModel(dbModel);
-		}
-
-		public UserModel GetUserByUserName(string userName)
-		{
-			User dbModel = dbContext.Users.FirstOrDefault(u => u.UserName == userName);
 
 			return dbModel == null ? null : new UserModel(dbModel);
 		}
@@ -62,6 +60,20 @@ namespace AuthorizationServiceDevelopment.Services
 				u.Email == creationModel.Email);
 
 			return dbModel != null;
+		}
+
+		public string GetUserSalt(string email)
+		{
+			User dbModel = dbContext.Users.FirstOrDefault(u => u.Email == email);
+
+			return dbModel != null ? dbModel.Salt : string.Empty;
+		}
+
+		public string GetUserPasswordHash(UserAuthenticationModel authorizationModel)
+		{
+			User dbModel = dbContext.Users.FirstOrDefault(u => u.Email == authorizationModel.Email);
+
+			return dbModel != null ? dbModel.PasswordHash : string.Empty;
 		}
 	}
 }

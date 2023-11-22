@@ -12,9 +12,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		public UserCreationModel(User dbModel)
 		{
-			this.UserName = dbModel.UserName;
-			this.Password = dbModel.Password;
-			this.Email = dbModel.Email;
+
 		}
 
 		[Required]
@@ -32,7 +30,6 @@ namespace AuthorizationServiceDevelopment.Models.Users
 			return new User
 			{
 				UserName = UserName,
-				Password = Password,
 				Email = Email
 			};
 		}

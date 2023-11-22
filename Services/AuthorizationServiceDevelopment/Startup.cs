@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using AuthorizationServiceDevelopment.Data;
+using AuthorizationServiceDevelopment.Managers;
 using AuthorizationServiceDevelopment.Models.Configurations;
 using AuthorizationServiceDevelopment.Services;
 using AuthorizationServiceDevelopment.Services.Authentication;
@@ -50,6 +51,7 @@ namespace AuthorizationServiceDevelopment
 			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<AccessTokenGenerator>();
 			services.AddTransient<Authenticator>();
+			services.AddTransient<IPasswordManager, PasswordManager>();
 
 			services.AddCors();
 		}

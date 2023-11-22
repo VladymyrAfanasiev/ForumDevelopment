@@ -51,7 +51,7 @@ function LoginPage() {
                     <Trans>Password</Trans>
                 </b>
             </label>
-            <input id="loginPage_password" type="text" placeholder={t("Enter Password")}></input>
+            <input id="loginPage_password" type="password" placeholder={t("Enter Password")}></input>
             <div className="loginPage_buttonContainer">
                 {
                     isLoading ? (

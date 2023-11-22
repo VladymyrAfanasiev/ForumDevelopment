@@ -1,7 +1,7 @@
-﻿using AuthorizationServiceDevelopment.Models.Users;
+﻿using AuthorizationServiceDevelopment.Managers;
+using AuthorizationServiceDevelopment.Models.Users;
 using AuthorizationServiceDevelopment.Services;
 using AuthorizationServiceDevelopment.Services.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthorizationServiceDevelopment.Controllers
@@ -12,11 +12,13 @@ namespace AuthorizationServiceDevelopment.Controllers
 	{
 		private readonly IUserService userService;
 		private readonly Authenticator authenticator;
+		private readonly IPasswordManager passwordManager;
 
-		public AuthorizationController(IUserService userService, Authenticator authenticator)
+		public AuthorizationController(IUserService userService, Authenticator authenticator, IPasswordManager passwordManager)
 		{
 			this.userService = userService;
 			this.authenticator = authenticator;
+			this.passwordManager = passwordManager;
 		}
 
 		[HttpPut("register")]
@@ -32,7 +34,8 @@ namespace AuthorizationServiceDevelopment.Controllers
 				return Conflict("User already exist");
 			}
 
-			UserModel userModel = userService.CreateUser(creationModel);
+			string passwordHash = passwordManager.GeneratePasswordHash(creationModel.Password, out string salt);
+			UserModel userModel = userService.CreateUser(creationModel, passwordHash, salt);
 			if (userModel == null)
 			{
 				return BadRequest("Fail to create a new user");
@@ -52,7 +55,7 @@ namespace AuthorizationServiceDevelopment.Controllers
 			UserModel userModel = this.userService.GetUser(authorizationModel);
 			if (userModel == null)
 			{
-				return NotFound("User email or password is wrong");
+				return NotFound("Failed to login");
 			}
 
 			return Ok(authenticator.Authenticate(userModel));
@@ -68,6 +71,18 @@ namespace AuthorizationServiceDevelopment.Controllers
 			}
 
 			return Ok(userModel);
+		}
+
+		[HttpGet("user/{email}/salt")]
+		public ActionResult GetUserSalt(string email)
+		{
+			string salt = this.userService.GetUserSalt(email);
+			if (string.IsNullOrEmpty(salt))
+			{
+				return NotFound("User not found");
+			}
+
+			return Ok(salt);
 		}
 
 		[HttpPost("refresh")]

@@ -22,7 +22,6 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		public string UserName { get; set; }
 
-
 		[EmailAddress]
 		public string Email { get; set; }
 

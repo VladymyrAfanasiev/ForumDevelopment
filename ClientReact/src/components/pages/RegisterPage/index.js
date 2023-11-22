@@ -72,13 +72,13 @@ function RegisterPage() {
                     <Trans>Password</Trans>
                 </b>
             </label>
-            <input id="registerPage_Password" type="text" placeholder={t("Enter Password")}></input>
+            <input id="registerPage_Password" type="password" placeholder={t("Enter Password")}></input>
             <label>
                 <b>
                     <Trans>Confirm Password</Trans>
                 </b>
             </label>
-            <input id="registerPage_confirmPassword" type="text" placeholder={t("Enter Password")}></input>
+            <input id="registerPage_confirmPassword" type="password" placeholder={t("Enter Password")}></input>
             <label>
                 <b>
                     <Trans>Email Address</Trans>

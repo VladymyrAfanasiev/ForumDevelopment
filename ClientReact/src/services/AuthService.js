@@ -1,5 +1,4 @@
 ﻿import axios from 'axios';
-
 class AuthService {
     constructor() {
         this.authenticationInfo = {
@@ -49,12 +48,23 @@ class AuthService {
 
     async loginAsync(email, password) {
         try {
+            let response = await axios.get('/api/authorization/user/' + email + '/salt', {} , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const salt = response.data;
+            const CryptoJS = require('crypto-js');
+            const keySize = (256 / 8) / 4;
+            const key = CryptoJS.PBKDF2(password, CryptoJS.enc.Base64.parse(salt), { hasher: CryptoJS.algo.SHA256, keySize, iterations: 100000 });
+            const passwordHash = key.toString(CryptoJS.enc.Base64);
             const data = {
                 Email: email,
-                Password: password
+                PasswordHash: passwordHash
             };
 
-            const response = await axios.post('/api/authorization/login', data, {
+            response = await axios.post('/api/authorization/login', data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AuthorizationServiceDevelopment.Data.Models;
+﻿using AuthorizationServiceDevelopment.Data.Models;
 
 namespace AuthorizationServiceDevelopment.Models.Users
 {
@@ -12,21 +11,11 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		public UserAuthenticationModel(User dbModel)
 		{
-			this.Email = dbModel.Email;
-			this.Password = dbModel.Password;
+
 		}
 
 		public string Email { get; set; }
 
-		public string Password { get; set; }
-
-		public User ToEntry()
-		{
-			return new User
-			{
-				Email = Email,
-				Password = Password
-			};
-		}
+		public string PasswordHash { get; set; }
 	}
 }
