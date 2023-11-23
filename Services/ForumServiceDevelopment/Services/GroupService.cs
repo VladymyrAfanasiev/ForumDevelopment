@@ -36,6 +36,16 @@ namespace ForumServiceDevelopment.Services
 			return new GroupFullModel(group);
 		}
 
+		public List<PostSimpleModel> GetPosts(string text)
+		{
+			return this.databaseContext
+				.Posts
+				.Where(p => p.Name.Contains(text) || p.Text.Contains(text))
+				.Include(p => p.Comments)
+				.Select(g => new PostSimpleModel(g))
+				.ToList();
+		}
+
 		public PostFullModel GetPostById(int postId)
 		{
 			Post post = this.databaseContext.Posts.Include(g => g.Comments).FirstOrDefault(gi => gi.Id == postId);

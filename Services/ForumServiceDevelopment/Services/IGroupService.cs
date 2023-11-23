@@ -10,6 +10,8 @@ namespace ForumServiceDevelopment.Services
 
 		GroupFullModel GetGroupById(int groupId);
 
+		List<PostSimpleModel> GetPosts(string text);
+
 		PostFullModel GetPostById(int postId);
 
 

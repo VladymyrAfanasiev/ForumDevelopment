@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
-import SearchItem from "./SearchItem";
-import forumService from '../../../services/ForumService';
 
+import forumService from '../../../services/ForumService';
+import MainFrame from "../../common/MainFrame"
+import GroupItem from "../../common/Group/GroupItem"
 import './SearchPage.css';
 
 function SearchPage() {
@@ -11,8 +12,13 @@ function SearchPage() {
 
     useEffect(() => {
         async function loadSearchItems() {
-            const searchItems = await forumService.getSearchItemsByCriteriaAsync(params.text);
-            setSearchItems(searchItems)
+            const result = await forumService.getSearchItemsByCriteriaAsync(params.text);
+            if (result.status) {
+                setSearchItems(result.data)
+            }
+            else {
+                alert("Failed to load search data")
+            }
         }
 
         loadSearchItems();
@@ -20,9 +26,11 @@ function SearchPage() {
     
     return (
         <div className="searchPage_content">
-            {
-                 searchItems.map(searchItem => <SearchItem item={searchItem} /> )
-            }
+            <MainFrame>
+                {
+                    searchItems.map(post => <GroupItem post={post} /> )
+                }
+            </MainFrame>
         </div>)
 }
 

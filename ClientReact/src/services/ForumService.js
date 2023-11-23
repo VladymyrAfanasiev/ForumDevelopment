@@ -149,22 +149,27 @@ class ForumService {
             };
         }
     }
-    
+
     async getSearchItemsByCriteriaAsync(text) {
-        return [
-            {
-                name: "search result 1"
-            },
-            {
-                name: "search result 2"
-            },
-            {
-                name: "search result 3"
-            },
-            {
-                name: "search result 4"
-            }
-        ];
+        try {
+            const response = await axios.get('/api/search/' + text, {} , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
     }
 }
 
