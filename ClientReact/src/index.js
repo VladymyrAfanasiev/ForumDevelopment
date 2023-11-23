@@ -15,6 +15,7 @@ import RegisterPage from './components/pages/RegisterPage';
 import GroupPage from './components/pages/GroupPage';
 import AddNewGroupItemPage from './components/pages/AddNewGroupItemPage';
 import UserPage from './components/pages/UserPage';
+import SearchPage from './components/pages/SearchPage';
 import AdminPage from './components/pages/AdminPage';
 import { AuthLayout } from './layouts/AuthLayout';
 import reportWebVitals from './reportWebVitals';
@@ -59,6 +60,7 @@ root.render(
               <Route path="requestCreateNewGroup" element={<RequestCreateNewGroupPage />} />
               <Route path="addNewGroupItem/:id" element={<AddNewGroupItemPage />} />
               <Route path="user/:id" element={<UserPage />} />
+              <Route path="search/:text" element={<SearchPage />} />
               <Route path="admin" element={<AdminPage />} />
             </Route>
           </Route>

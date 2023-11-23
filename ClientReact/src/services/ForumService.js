@@ -149,6 +149,23 @@ class ForumService {
             };
         }
     }
+    
+    async getSearchItemsByCriteriaAsync(text) {
+        return [
+            {
+                name: "search result 1"
+            },
+            {
+                name: "search result 2"
+            },
+            {
+                name: "search result 3"
+            },
+            {
+                name: "search result 4"
+            }
+        ];
+    }
 }
 
 const forumService = new ForumService();

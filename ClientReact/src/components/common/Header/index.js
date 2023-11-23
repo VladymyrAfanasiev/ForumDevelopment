@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import { setAuthUserInfo } from "../../../redux/slice/authUserInfoSlice"
 
 import authService from '../../../services/AuthService';
@@ -14,6 +15,21 @@ function Header() {
     const navigate = useNavigate();
     const authUserInfo = useSelector(state => state.authUserInfo.value);
     const dispatch = useDispatch();
+    const { transcript } = useSpeechRecognition();
+    const recognition = new SpeechRecognition.getRecognition();
+
+    recognition.addEventListener("end", () => {
+        document.getElementById("header_search_input").value = transcript;
+    });
+    
+    function searchButtonClick () {
+        const searchValue = document.getElementById("header_search_input").value;
+        if (searchValue == "") {
+            return;
+        }
+
+        navigate("search/" + searchValue);
+    }
 
     async function logoutClicked () {
         const success = await authService.logoutAsync();
@@ -82,8 +98,20 @@ function Header() {
                 }
                 {
                     authUserInfo?.isAuthenticated ? (
-                        <div className="header_auth">
-                            <div className="header_dropdown">
+                        <div className="header_left">
+			
+                            <div className="header_search">
+                                <input id="header_search_input" autoComplete="off" type="text" placeholder={t("I search...")} />
+                                <button onClick={SpeechRecognition.startListening}>
+                                    <img src="/img/microphone.svg" alt="" />
+                                </button>
+                                <button className="root_button" title={t("Search")} onClick={searchButtonClick}>
+                                    {
+                                        t("Search")
+                                    }
+                                </button>
+                            </div>
+                            <div className="header_dropdown header_indent">
                                 <button className="root_button">
                                     {
                                         authUserInfo?.user?.userName
@@ -113,7 +141,7 @@ function Header() {
                             </a>
                         </div>
                     ) : (
-                        <div className="header_auth">
+                        <div className="header_left">
                             <Link className="root_a_button" to="/login">
                                 {
                                     t("Login")

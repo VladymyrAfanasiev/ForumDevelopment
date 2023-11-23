@@ -18,20 +18,15 @@
    display: flex;
 }
 
-.header_auth {
+.header_left {
     display: flex;
     align-items: center;
     margin: 0 0 0 auto;
-
 }
 
 .header_indent {
     margin-left: 10px;
 }
-
-/* .header_auth a, .header_auth button {
-    margin-left: 10px;
-} */
 
 .header_dropdown {
     margin-right: 10px;
@@ -54,4 +49,38 @@
 
 .header_dropdown:hover .header_menu_dropdown {
     display: block;
+}
+
+
+.header_search {
+    display: flex;
+    height: 41px;
+    border: 0.5px solid black;
+}
+
+.header_search>input {
+    width: 350px;
+    border: 0px;
+    font-size: 16px;
+    padding: 0px 15px;
+}
+
+.header_search>input:focus {
+    outline: none;
+}
+
+.header_search>button {
+    background: none;
+    border: 0px;
+}
+
+.header_search>button:hover {
+    background: var(--theme-color);
+}
+
+
+.header_search>button>img {
+    width: 16px;
+    height: 24px;
+    padding-top: 3px;
 }
