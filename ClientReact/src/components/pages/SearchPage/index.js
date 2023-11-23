@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
+import { useTranslation, withTranslation } from 'react-i18next';
+import { Trans, Plural, Select } from 'react-i18next/icu.macro';
 
 import forumService from '../../../services/ForumService';
 import MainFrame from "../../common/MainFrame"
@@ -8,6 +10,7 @@ import './SearchPage.css';
 
 function SearchPage() {
     const params = useParams();
+    const { t, i18n } = useTranslation();
     const [searchItems, setSearchItems] = useState([]);
 
     useEffect(() => {
@@ -26,7 +29,7 @@ function SearchPage() {
     
     return (
         <div className="searchPage_content">
-            <MainFrame>
+            <MainFrame name={t("Posts")}>
                 {
                     searchItems.map(post => <GroupItem post={post} /> )
                 }
