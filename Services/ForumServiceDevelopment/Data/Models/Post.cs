@@ -2,13 +2,13 @@
 {
 	public class Post
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		public string Name { get; set; }
 
 		public string Text { get; set; }
 
-		public int AuthorId { get; set; }
+		public Guid AuthorId { get; set; }
 
 		public DateTime CreatedOn { get; set; }
 
@@ -17,6 +17,6 @@
 
 		public Group? Group { get; set; }
 
-		public int? GroupId { get; set; }
+		public Guid? GroupId { get; set; }
 	}
 }

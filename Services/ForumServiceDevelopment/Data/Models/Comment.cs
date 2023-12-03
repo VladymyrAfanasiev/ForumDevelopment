@@ -2,17 +2,19 @@
 {
 	public class Comment
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		public string Text { get; set; }
 
-		public int AuthorId { get; set; }
+		public Guid AuthorId { get; set; }
 
 		public DateTime CreatedOn { get; set; }
+
+		public List<CommentReaction> CommentReactions { get; set; } = new List<CommentReaction>();
 
 
 		public Post? Post { get; set; }
 
-		public int? PostId { get; set; }
+		public Guid? PostId { get; set; }
 	}
 }

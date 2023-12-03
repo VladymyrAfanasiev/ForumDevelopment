@@ -130,7 +130,7 @@ class ForumService {
                 text: text
             };
 
-            const response = await axios.put('/api/group/' + -1 + '/post/' + postId + '/comment', data , {
+            const response = await axios.put('/api/group/' + '00000000-0000-0000-0000-000000000000' + '/post/' + postId + '/comment', data , {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -153,6 +153,72 @@ class ForumService {
     async getSearchItemsByCriteriaAsync(text) {
         try {
             const response = await axios.get('/api/search/' + text, {} , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async getCommentReactions(commentId) {
+        try {
+            const response = await axios.get('/api/group/' + '00000000-0000-0000-0000-000000000000' + '/post/' + '00000000-0000-0000-0000-000000000000' + '/comment/' + commentId + '/reaction', {} , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async updateCommentReaction(commentId, reaction) {
+        try {
+            const response = await axios.post('/api/group/' + '00000000-0000-0000-0000-000000000000' + '/post/' + '00000000-0000-0000-0000-000000000000' + '/comment/' + commentId + '/reaction', reaction, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async dislikeComment(commentId) {
+        try {
+            const response = await axios.post('/api/group/' + '00000000-0000-0000-0000-000000000000' + '/post/' + '00000000-0000-0000-0000-000000000000' + '/comment/' + commentId + '/reaction', 2, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

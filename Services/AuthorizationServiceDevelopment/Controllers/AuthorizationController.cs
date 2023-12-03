@@ -61,8 +61,8 @@ namespace AuthorizationServiceDevelopment.Controllers
 			return Ok(authenticator.Authenticate(userModel));
 		}
 
-		[HttpGet("user/{userId:int}")]
-		public IActionResult GetUserById(int userId)
+		[HttpGet("user/{userId:guid}")]
+		public IActionResult GetUserById(Guid userId)
 		{
 			UserModel userModel = this.userService.GetUserById(userId);
 			if (userModel == null)

@@ -14,25 +14,14 @@ namespace ForumServiceDevelopment.Models
 			Posts = model.Posts.ConvertAll(p => new PostSimpleModel(p));
 		}
 
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		public string Name { get; set; }
 
 		public string Description { get; set; }
 
-		public int AuthorId { get; set; }
+		public Guid AuthorId { get; set; }
 
 		public List<PostSimpleModel> Posts { get; set; }
-
-		public Group ToEntity()
-		{
-			return new Group
-			{
-				Id = Id,
-				Name = Name,
-				Description = Description,
-				Posts = Posts.ConvertAll(p => p.ToEntity())
-			};
-		}
 	}
 }

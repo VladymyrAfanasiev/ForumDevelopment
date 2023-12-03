@@ -8,17 +8,23 @@ namespace ForumServiceDevelopment.Services
 	{
 		List<GroupSimpleModel> GetGroups();
 
-		GroupFullModel GetGroupById(int groupId);
+		GroupFullModel GetGroupById(Guid groupId);
+
+		GroupFullModel AddGroup(GroupCreationModel model, Guid authorId);
+
 
 		List<PostSimpleModel> GetPosts(string text);
 
-		PostFullModel GetPostById(int postId);
+		PostModel GetPostById(Guid postId);
 
 
-		GroupFullModel AddGroup(GroupCreationModel model, int authorId);
+		PostModel AddPost(Guid groupId, PostCreationModel model, Guid authorId);
 
-		PostFullModel AddPost(int groupId, PostCreationModel model, int authorId);
 
-		CommentModel AddComment(int postId, CommentCreationModel model, int authorId);
+		CommentModel AddComment(Guid postId, CommentCreationModel model, Guid authorId);
+
+		CommentReactionsModel GetCommentReactions(Guid commentId, Guid userId);
+
+		CommentReactionsModel UpdateCommentReaction(Guid commentId, CommentReactionEnum reaction, Guid userId);
 	}
 }

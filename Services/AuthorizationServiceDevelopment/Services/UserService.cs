@@ -40,7 +40,7 @@ namespace AuthorizationServiceDevelopment.Services
 			return dbModel == null ? null : new UserModel(dbModel);
 		}
 
-		public UserModel GetUserById(int id)
+		public UserModel GetUserById(Guid id)
 		{
 			User dbModel = dbContext.Users.FirstOrDefault(u => u.Id == id);
 

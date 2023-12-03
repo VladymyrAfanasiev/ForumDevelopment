@@ -24,11 +24,9 @@ namespace AuthorizationServiceDevelopment.Migrations
 
             modelBuilder.Entity("AuthorizationServiceDevelopment.Data.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()

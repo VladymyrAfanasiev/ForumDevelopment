@@ -15,7 +15,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 			this.UserName = dbModel.UserName;
 		}
 
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		public string UserName { get; set; }
 	}

@@ -21,7 +21,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 			ExpirationTime = token.ExpirationTime;
 		}
 
-		public int Id { get; }
+		public Guid Id { get; }
 
 		public string UserName { get; }
 

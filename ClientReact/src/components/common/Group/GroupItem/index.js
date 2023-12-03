@@ -10,7 +10,7 @@ class GroupItem extends React.Component {
                 <img width={40} height={40} src="/img/forum.svg" alt="" />
                 <div className="groupItemInfo">
                     <h4>
-                        <Link to={"/group/" + -1 + "/post/" + this.props.post.id}>
+                        <Link to={"/group/" + '00000000-0000-0000-0000-000000000000' + "/post/" + this.props.post.id}>
                             {
                                 this.props.post.name
                             }

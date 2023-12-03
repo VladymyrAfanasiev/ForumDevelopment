@@ -37,7 +37,7 @@ function AddNewGroupItemPage() {
 
         const result = await forumService.addNewGroupItem(params.id, newPostName, newPostText);
         if (result.status) {
-            navigate('/group/-1/post/' + result.data.id);
+            navigate('/group/' + '00000000-0000-0000-0000-000000000000' + '/post/' + result.data.id);
         }
         else {
             alert(result.message);

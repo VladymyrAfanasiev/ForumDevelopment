@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -12,10 +13,11 @@ namespace ForumServiceDevelopment.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,11 +28,12 @@ namespace ForumServiceDevelopment.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GroupId = table.Column<int>(type: "int", nullable: true)
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,10 +49,11 @@ namespace ForumServiceDevelopment.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: true)
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,6 +64,30 @@ namespace ForumServiceDevelopment.Migrations
                         principalTable: "Posts",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateTable(
+                name: "CommentReactions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReactionId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentReactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CommentReactions_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommentReactions_CommentId",
+                table: "CommentReactions",
+                column: "CommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
@@ -74,6 +102,9 @@ namespace ForumServiceDevelopment.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CommentReactions");
+
             migrationBuilder.DropTable(
                 name: "Comments");
 

@@ -6,7 +6,7 @@ namespace AuthorizationServiceDevelopment.Services
 	{
 		UserModel CreateUser(UserCreationModel creationModel, string passwordHash, string salt);
 		UserModel GetUser(UserAuthenticationModel authorizationModel);
-		UserModel GetUserById(int id);
+		UserModel GetUserById(Guid id);
 		bool CheckUserExistance(UserCreationModel creationModel);
 		string GetUserSalt(string email);
 		string GetUserPasswordHash(UserAuthenticationModel authorizationModel);

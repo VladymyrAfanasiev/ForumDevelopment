@@ -24,20 +24,18 @@ namespace ForumServiceDevelopment.Migrations
 
             modelBuilder.Entity("ForumServiceDevelopment.Data.Models.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PostId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -50,16 +48,36 @@ namespace ForumServiceDevelopment.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("ForumServiceDevelopment.Data.Models.CommentReaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ReactionId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("CommentReactions");
+                });
+
             modelBuilder.Entity("ForumServiceDevelopment.Data.Models.Group", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -79,20 +97,18 @@ namespace ForumServiceDevelopment.Migrations
 
             modelBuilder.Entity("ForumServiceDevelopment.Data.Models.Post", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -118,6 +134,15 @@ namespace ForumServiceDevelopment.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("ForumServiceDevelopment.Data.Models.CommentReaction", b =>
+                {
+                    b.HasOne("ForumServiceDevelopment.Data.Models.Comment", "Comment")
+                        .WithMany("CommentReactions")
+                        .HasForeignKey("CommentId");
+
+                    b.Navigation("Comment");
+                });
+
             modelBuilder.Entity("ForumServiceDevelopment.Data.Models.Post", b =>
                 {
                     b.HasOne("ForumServiceDevelopment.Data.Models.Group", "Group")
@@ -125,6 +150,11 @@ namespace ForumServiceDevelopment.Migrations
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("ForumServiceDevelopment.Data.Models.Comment", b =>
+                {
+                    b.Navigation("CommentReactions");
                 });
 
             modelBuilder.Entity("ForumServiceDevelopment.Data.Models.Group", b =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthorizationServiceDevelopment.Migrations
 {
     [DbContext(typeof(AuthorizationDbContext))]
-    [Migration("20231122003340_PasswordHash")]
-    partial class PasswordHash
+    [Migration("20231126015118_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,9 @@ namespace AuthorizationServiceDevelopment.Migrations
 
             modelBuilder.Entity("AuthorizationServiceDevelopment.Data.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()

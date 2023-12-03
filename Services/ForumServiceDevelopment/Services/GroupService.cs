@@ -25,7 +25,7 @@ namespace ForumServiceDevelopment.Services
 				.ToList();
 		}
 
-		public GroupFullModel GetGroupById(int groupId)
+		public GroupFullModel GetGroupById(Guid groupId)
 		{
 			Group group = this.databaseContext.Groups.Include(g => g.Posts).FirstOrDefault(gi => gi.Id == groupId);
 			if (group == null)
@@ -36,29 +36,7 @@ namespace ForumServiceDevelopment.Services
 			return new GroupFullModel(group);
 		}
 
-		public List<PostSimpleModel> GetPosts(string text)
-		{
-			return this.databaseContext
-				.Posts
-				.Where(p => p.Name.Contains(text) || p.Text.Contains(text))
-				.Include(p => p.Comments)
-				.Select(g => new PostSimpleModel(g))
-				.ToList();
-		}
-
-		public PostFullModel GetPostById(int postId)
-		{
-			Post post = this.databaseContext.Posts.Include(g => g.Comments).FirstOrDefault(gi => gi.Id == postId);
-			if (post == null)
-			{
-				return null;
-			}
-
-			return new PostFullModel(post);
-		}
-
-
-		public GroupFullModel AddGroup(GroupCreationModel model, int authorId)
+		public GroupFullModel AddGroup(GroupCreationModel model, Guid authorId)
 		{
 			Group existedGroup = this.databaseContext.Groups.FirstOrDefault(g => g.Name == model.Name);
 			if (existedGroup != null)
@@ -75,7 +53,30 @@ namespace ForumServiceDevelopment.Services
 			return new GroupFullModel(newGroup);
 		}
 
-		public PostFullModel AddPost(int groupId, PostCreationModel model, int authorId)
+
+		public List<PostSimpleModel> GetPosts(string text)
+		{
+			return this.databaseContext.Posts
+				.Where(p => p.Name.Contains(text) || p.Text.Contains(text))
+				.Include(p => p.Comments)
+				.Select(g => new PostSimpleModel(g))
+				.ToList();
+		}
+
+		public PostModel GetPostById(Guid postId)
+		{
+			Post post = this.databaseContext.Posts
+				.Include(p => p.Comments)
+				.FirstOrDefault(gi => gi.Id == postId);
+			if (post == null)
+			{
+				return null;
+			}
+
+			return new PostModel(post);
+		}
+
+		public PostModel AddPost(Guid groupId, PostCreationModel model, Guid authorId)
 		{
 			Group group = this.databaseContext.Groups.FirstOrDefault(gi => gi.Id == groupId);
 			if (group == null)
@@ -90,10 +91,11 @@ namespace ForumServiceDevelopment.Services
 			this.databaseContext.Posts.Add(newPost);
 			this.databaseContext.SaveChanges();
 
-			return new PostFullModel(newPost);
+			return new PostModel(newPost);
 		}
 
-		public CommentModel AddComment(int postId, CommentCreationModel model, int authorId)
+
+		public CommentModel AddComment(Guid postId, CommentCreationModel model, Guid authorId)
 		{
 			Post post = this.databaseContext.Posts.FirstOrDefault(gi => gi.Id == postId);
 			if (post == null)
@@ -109,6 +111,51 @@ namespace ForumServiceDevelopment.Services
 			this.databaseContext.SaveChanges();
 
 			return new CommentModel(newComment);
+		}
+
+		public CommentReactionsModel GetCommentReactions(Guid commentId, Guid userId)
+		{
+			Comment comment = this.databaseContext.Comments.Include(c => c.CommentReactions).FirstOrDefault(c => c.Id == commentId);
+			if (comment == null)
+			{
+				return null;
+			}
+
+			return new CommentReactionsModel(comment.CommentReactions, userId);
+		}
+
+		public CommentReactionsModel UpdateCommentReaction(Guid commentId, CommentReactionEnum newReaction, Guid userId)
+		{
+			Comment comment = this.databaseContext.Comments.Include(c => c.CommentReactions).FirstOrDefault(c => c.Id == commentId);
+			if (comment == null)
+			{
+				return null;
+			}
+
+			CommentReaction reaction = comment.CommentReactions.FirstOrDefault(r => r.UserId == userId);
+			if (reaction == null)
+			{
+				reaction = new CommentReaction();
+				reaction.UserId = userId;
+				reaction.CommentId = commentId;
+				reaction.ReactionId = (int)newReaction;
+
+				comment.CommentReactions.Add(reaction);
+
+				this.databaseContext.CommentReactions.Add(reaction);
+			}
+			else if (reaction.ReactionId == (int)newReaction)
+			{
+				return null;
+			}
+			else
+			{
+				reaction.ReactionId = (int)newReaction;
+			}
+
+			this.databaseContext.SaveChanges();
+
+			return new CommentReactionsModel(comment.CommentReactions, userId);
 		}
 	}
 }

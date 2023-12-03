@@ -13,7 +13,7 @@ namespace ForumServiceDevelopment.Models.Posts
 			CommentsCount = model.Comments.Count();
 		}
 
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		public string Name { get; set; }
 
@@ -21,17 +21,8 @@ namespace ForumServiceDevelopment.Models.Posts
 
 		public string Text { get; set; }
 
-		public int AuthorId { get; set; }
+		public Guid AuthorId { get; set; }
 
 		public int CommentsCount { get; set; }
-
-		public Post ToEntity()
-		{
-			return new Post
-			{
-				Id = Id,
-				Name = Name
-			};
-		}
 	}
 }

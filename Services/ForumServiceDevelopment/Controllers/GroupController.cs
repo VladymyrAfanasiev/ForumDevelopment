@@ -27,8 +27,8 @@ namespace ForumServiceDevelopment.Controllers
 			return Ok(models);
 		}
 
-		[HttpGet("{groupId:int}")]
-		public IActionResult GetGroupById(int groupId)
+		[HttpGet("{groupId:guid}")]
+		public IActionResult GetGroupById(Guid groupId)
 		{
 			GroupFullModel model = this.groupService.GetGroupById(groupId);
 			if (model == null)
@@ -39,10 +39,10 @@ namespace ForumServiceDevelopment.Controllers
 			return Ok(model);
 		}
 
-		[HttpGet("{groupId:int}/post/{postId:int}")]
-		public IActionResult GetPostById(int groupId, int postId)
+		[HttpGet("{groupId:guid}/post/{postId:guid}")]
+		public IActionResult GetPostById(Guid groupId, Guid postId)
 		{
-			PostFullModel model = this.groupService.GetPostById(postId);
+			PostModel model = this.groupService.GetPostById(postId);
 			if (model == null)
 			{
 				return NotFound("Post not found");
@@ -65,10 +65,10 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
-		[HttpPut("{groupId:int}/post")]
-		public IActionResult AddPost(int groupId, PostCreationModel creationModel)
+		[HttpPut("{groupId:guid}/post")]
+		public IActionResult AddPost(Guid groupId, PostCreationModel creationModel)
 		{
-			PostFullModel model = this.groupService.AddPost(groupId, creationModel, GetAuthorizedUserId());
+			PostModel model = this.groupService.AddPost(groupId, creationModel, GetAuthorizedUserId());
 			if (model == null)
 			{
 				return BadRequest("Failed to add post");
@@ -78,8 +78,8 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
-		[HttpPut("{groupId:int}/post/{postId:int}/comment")]
-		public IActionResult AddComment(int groupId, int postId, CommentCreationModel creationModel)
+		[HttpPut("{groupId:guid}/post/{postId:guid}/comment")]
+		public IActionResult AddComment(Guid groupId, Guid postId, CommentCreationModel creationModel)
 		{
 			CommentModel model = this.groupService.AddComment(postId, creationModel, GetAuthorizedUserId());
 			if (model == null)
@@ -90,15 +90,50 @@ namespace ForumServiceDevelopment.Controllers
 			return Ok(model);
 		}
 
-		private int GetAuthorizedUserId()
+		[HttpGet("{groupId:guid}/post/{postId:guid}/comment/{commentId:guid}/reaction")]
+		public IActionResult GetCommentReactions(Guid groupId, Guid postId, Guid commentId)
 		{
-			string authorId = User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
-			if (!string.IsNullOrEmpty(authorId) && int.TryParse(authorId, out int id))
+			CommentReactionsModel models = this.groupService.GetCommentReactions(commentId, GetAuthorizedUserId());
+			if (models == null)
+			{
+				return NotFound("Comment not found");
+			}
+
+			return Ok(models);
+		}
+
+		[Authorize]
+		[HttpPost("{groupId:guid}/post/{postId:guid}/comment/{commentId:guid}/reaction")]
+		public IActionResult UpdateCommentReaction(Guid groupId, Guid postId, Guid commentId, [FromBody]int reaction)
+		{
+			CommentReactionEnum reactionEnum;
+			if (Enum.IsDefined(typeof(CommentReactionEnum), reaction))
+			{
+				reactionEnum = (CommentReactionEnum)reaction;
+			}
+			else
+			{
+				return BadRequest();
+			}
+
+			CommentReactionsModel model = this.groupService.UpdateCommentReaction(commentId, reactionEnum, GetAuthorizedUserId());
+			if (model == null)
+			{
+				return BadRequest();
+			}
+
+			return Ok(model);
+		}
+
+		private Guid GetAuthorizedUserId()
+		{
+			string authorId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+			if (!string.IsNullOrEmpty(authorId) && Guid.TryParse(authorId, out Guid id))
 			{
 				return id;
 			}
 
-			return -1000;
+			return Guid.Empty;
 		}
 	}
 }

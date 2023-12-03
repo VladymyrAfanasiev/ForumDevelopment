@@ -24,6 +24,11 @@ namespace ForumServiceDevelopment.Data
 				.HasMany(gi => gi.Comments)
 				.WithOne(c => c.Post)
 				.HasForeignKey(c => c.PostId);
+
+			modelBuilder.Entity<Comment>()
+				.HasMany(c => c.CommentReactions)
+				.WithOne(cl => cl.Comment)
+				.HasForeignKey(cl => cl.CommentId);
 		}
 
 
@@ -32,5 +37,7 @@ namespace ForumServiceDevelopment.Data
 		public DbSet<Post> Posts { get; set; }
 
 		public DbSet<Comment> Comments { get; set; }
+
+		public DbSet<CommentReaction> CommentReactions { get; set; }
 	}
 }

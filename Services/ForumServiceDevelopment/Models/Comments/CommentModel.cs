@@ -13,17 +13,18 @@ namespace ForumServiceDevelopment.Models.Comments
 		{
 			Id = model.Id;
 			Text = model.Text;
-			CreatedOn = model.CreatedOn;
 			AuthorId = model.AuthorId;
+			CreatedOn = model.CreatedOn;
 		}
 
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		public string Text { get; set; }
 
-		public int AuthorId { get; set; }
+		public Guid AuthorId { get; set; }
 
 		public DateTime CreatedOn { get; set; }
+
 
 		public Comment ToEntity()
 		{
