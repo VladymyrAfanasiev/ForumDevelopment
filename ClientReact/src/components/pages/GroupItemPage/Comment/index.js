@@ -1,8 +1,9 @@
-import React from 'react';
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
-import {Link} from 'react-router-dom'
+import { React, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
+import authService from '../../../../services/AuthService';
 import forumService from '../../../../services/ForumService';
 
 import './Comment.css';
@@ -15,6 +16,7 @@ function Comment(props) {
     }
 
     const params = useParams();
+    const navigate = useNavigate();
     const [reactions, setReactions] = useState({});
 
     useEffect(() => {
@@ -32,6 +34,13 @@ function Comment(props) {
     }, [params])
 
     const commentLikeClick = async function () {
+        const authenticationInfo = await authService.getAuthenticationInfoAsync();
+        if (!authenticationInfo.isAuthenticated) {
+            navigate('/login');
+
+            return;
+        }
+
         if (reactions.userReactionId === CommentReactionEnum.Like) {
             return;
         }
@@ -46,6 +55,13 @@ function Comment(props) {
     }
 
     const commentDislikeClick = async function () {
+        const authenticationInfo = await authService.getAuthenticationInfoAsync();
+        if (!authenticationInfo.isAuthenticated) {
+            navigate('/login');
+
+            return;
+        }
+
         if (reactions.userReactionId === CommentReactionEnum.Dislike) {
             return;
         }
