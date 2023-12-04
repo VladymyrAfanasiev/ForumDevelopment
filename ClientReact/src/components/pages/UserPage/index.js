@@ -47,7 +47,7 @@ function UserPage() {
 
     return (
         <div className="userPage_content">
-            <MaineFrame name={params.id} title="User name">
+            <MaineFrame name={userInfo.userName} title="User name">
                 <div className="userPage_userGeneralInfo">
                     <div className="userPage_img">
                         <img src="/img/anon.png" />
