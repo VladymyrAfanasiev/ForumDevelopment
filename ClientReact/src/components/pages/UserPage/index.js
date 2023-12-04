@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"
 import { withTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next/icu.macro';
+import dateFormat from "dateformat";
 
 import MaineFrame from '../../common/MainFrame';
 import MainFrameSeparator from '../../common/MainFrameSeparator';
@@ -55,7 +56,7 @@ function UserPage() {
                     <div className="userPage_shortDescription">
                         <p>User name: {userInfo.userName}</p>
                         <p>Email: {userInfo.email}</p>
-                        <p>Joined date: {userInfo.joinedOn}</p>
+                        <p>Joined date: {dateFormat(userInfo.joinedOn, "mmmm dS, yyyy")}</p>
                     </div>
                 </div>
                 <div>

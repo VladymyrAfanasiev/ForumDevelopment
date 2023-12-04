@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import dateFormat from "dateformat";
 
 import authService from '../../../../services/AuthService';
 import forumService from '../../../../services/ForumService';
@@ -94,7 +95,7 @@ function Comment(props) {
                     <div className="comment_date">
                         <span >
                             {
-                                props.comment.createdOn
+                                dateFormat(props.comment.createdOn, "dddd, mmmm dS, yyyy, h:MM:ss TT")
                             }
                         </span>
                     </div>
