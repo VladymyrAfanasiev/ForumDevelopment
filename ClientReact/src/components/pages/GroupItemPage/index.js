@@ -41,17 +41,20 @@ function GroupItemPage() {
         if (!authenticationInfo.isAuthenticated) {
             navigate('/login');
 
-            return;
+            return false;
         }
 
         const result = await forumService.addComment(params.postId, text);
         if (result.status) {
             setComments([...post.comments, result.data]);
             post.comments.push(result.data);
+
+            return true;
         }
-        else {
-            alert(result.message);
-        }
+
+        alert(result.message);
+
+        return false;
     }
 
     return (

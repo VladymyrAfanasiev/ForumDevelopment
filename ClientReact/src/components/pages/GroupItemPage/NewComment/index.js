@@ -14,7 +14,10 @@ function NewComment(params) {
     
     const addNewCommentClicked = async function () {
         const text = document.getElementsByClassName("newComment_text")[0].value;
-        await params.addNewCommentHandler(text);
+        const result = await params.addNewCommentHandler(text);
+        if (result) {
+            document.getElementsByClassName("newComment_text")[0].value = '';
+        }
     }
 
     return (
