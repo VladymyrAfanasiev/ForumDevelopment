@@ -146,7 +146,7 @@ namespace ForumServiceDevelopment.Services
 			}
 			else if (reaction.ReactionId == (int)newReaction)
 			{
-				return null;
+				reaction.ReactionId = (int)CommentReactionEnum.NoReaction;
 			}
 			else
 			{

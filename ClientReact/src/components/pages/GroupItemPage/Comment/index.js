@@ -41,10 +41,6 @@ function Comment(props) {
             return;
         }
 
-        if (reactions.userReactionId === CommentReactionEnum.Like) {
-            return;
-        }
-
         const result = await forumService.updateCommentReaction(props.comment.id, CommentReactionEnum.Like);
         if (result.status) {
             setReactions(result.data);
@@ -59,10 +55,6 @@ function Comment(props) {
         if (!authenticationInfo.isAuthenticated) {
             navigate('/login');
 
-            return;
-        }
-
-        if (reactions.userReactionId === CommentReactionEnum.Dislike) {
             return;
         }
 
