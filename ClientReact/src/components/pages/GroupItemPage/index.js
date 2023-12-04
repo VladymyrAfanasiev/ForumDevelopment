@@ -20,16 +20,25 @@ function GroupItemPage() {
     const { t, i18n } = useTranslation();
     const [post, setPost] = useState({});
     const [comments, setComments] = useState([]);
+    const [authorName, setAuthorName] = useState('');
 
     useEffect(() => {
         async function loadPost() {
             const result = await forumService.getGroupItemById(params.groupId, params.postId);
-            if (result.status) {
-                setPost(result.data);
-                setComments(result.data.comments);
+            if (result.status !== true) {
+                alert(result.message);
+                return;
+            }
+
+            setPost(result.data);
+            setComments(result.data.comments);
+
+            const authorResult = await authService.getUserInfo(result.data.authorId);
+            if (authorResult.status) {
+                setAuthorName(authorResult.data.userName);
             }
             else {
-                alert(result.message);
+                setAuthorName(result.data.authorId);
             }
         }
 
@@ -70,7 +79,7 @@ function GroupItemPage() {
                         <p2>{t("Author")}</p2>
                         <Link to={"/user/" + post.authorId}>
                             {
-                                post.authorId
+                                authorName
                             }
                         </Link>
                     </div>

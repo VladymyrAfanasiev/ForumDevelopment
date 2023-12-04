@@ -122,6 +122,7 @@ class AuthService {
         };
     }
 
+    // TODO: Add user info caching
     async getUserInfo(id) {
         try {
             const response = await axios.get('/api/authorization/user/' + id, {}, {

@@ -18,15 +18,24 @@ function Comment(props) {
     const params = useParams();
     const navigate = useNavigate();
     const [reactions, setReactions] = useState({});
+    const [authorName, setAuthorName] = useState('');
 
     useEffect(() => {
         async function loadReactions() {
             const result = await forumService.getCommentReactions(props.comment.id);
-            if (result.status) {
-                setReactions(result.data);
+            if (result.status !== true) {
+                alert(result.message);
+                return;
+            }
+
+            setReactions(result.data);
+
+            const authorResult = await authService.getUserInfo(props.comment.authorId);
+            if (authorResult.status) {
+                setAuthorName(authorResult.data.userName);
             }
             else {
-                alert(result.message);
+                setAuthorName(props.comment.authorId);
             }
         }
 
@@ -77,7 +86,7 @@ function Comment(props) {
                     <div className="comment_autor">
                         <Link to={"/user/" + props.comment.authorId}>
                             {
-                                props.comment.authorId
+                                authorName
                             }
                         </Link>
                            
