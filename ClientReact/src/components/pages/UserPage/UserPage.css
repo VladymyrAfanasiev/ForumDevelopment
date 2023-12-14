@@ -29,3 +29,9 @@
 .userPage_tabContent {
     padding: 10px;
 }
+
+.userPage_tabContent > div > ol {
+    padding:0px;
+    margin: 0px;
+    list-style-type: none;
+}

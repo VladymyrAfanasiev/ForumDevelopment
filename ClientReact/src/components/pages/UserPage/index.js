@@ -6,8 +6,10 @@ import dateFormat from "dateformat";
 
 import MaineFrame from '../../common/MainFrame';
 import MainFrameSeparator from '../../common/MainFrameSeparator';
+import Request from './Request';
 
 import authService from '../../../services/AuthService';
+import forumService from '../../../services/ForumService';
 
 import "./UserPage.css";
 
@@ -15,7 +17,9 @@ function UserPage() {
     const params = useParams();
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
-    const [activeTab, setActiveTab] = useState('Profile');
+    const [currentUserInfo, setCurrentUserInfo] = useState({});
+    const [requests, setRequests] = useState([]);
+    const [activeTab, setActiveTab] = useState('Requests');
 
     useEffect(() => {
         async function loadUserInfo() {
@@ -28,9 +32,20 @@ function UserPage() {
 
                 navigate('/');
             }
+
+            const authenticationInfo = authService.getAuthenticationInfo();
+            setCurrentUserInfo(authenticationInfo.user);
+        }
+
+        async function loadRequests() {
+            const result = await forumService.getRequests();
+            if (result.status) {
+                setRequests(result.data);
+            }
         }
 
         loadUserInfo();
+        loadRequests();
     }, [params])
 
     const handleTabClick = (e) => {
@@ -54,41 +69,57 @@ function UserPage() {
                         <img src="/img/anon.png" />
                     </div>
                     <div className="userPage_shortDescription">
-                        <p>User name: {userInfo.userName}</p>
+                        <p>User name: {userInfo.name}</p>
                         <p>Email: {userInfo.email}</p>
                         <p>Joined date: {dateFormat(userInfo.joinedOn, "mmmm dS, yyyy")}</p>
                     </div>
                 </div>
-                <div>
-                    <MainFrameSeparator />
-                    <div className="userPage_tabs">
-                        <button className="root_button_active" id="Profile" onClick={handleTabClick}>
-                            <Trans>Profile</Trans>
-                        </button>
-                        <button className="root_button" id="Activity" onClick={handleTabClick}>
-                            <Trans>Activity</Trans>
-                        </button>
+                {
+                    userInfo.id === currentUserInfo.id &&
+                    <div>
+                        <MainFrameSeparator />
+                        <div className="userPage_tabs">
+                            <button className="root_button_active" id="Requests" onClick={handleTabClick}>
+                                <Trans>Requests</Trans>
+                            </button>
+                            <button className="root_button" id="Profile" onClick={handleTabClick}>
+                                <Trans>Profile</Trans>
+                            </button>
+                            <button className="root_button" id="Activity" onClick={handleTabClick}>
+                                <Trans>Activity</Trans>
+                            </button>
+                        </div>
+                        <MainFrameSeparator />
+                        <div className="userPage_tabContent">
+                            {(() => {
+                                switch (activeTab) {
+                                    case "Requests":
+                                        return (
+                                            <div>
+                                                <ol>
+                                                    {
+                                                        requests.map(request => <li><Request request={request} userInfo={userInfo} /></li>)
+                                                    }
+                                                </ol>
+                                            </div>
+                                        );
+                                    case "Profile":
+                                        return (
+                                            <div>
+                                                {activeTab + " tab content"}
+                                            </div>
+                                        );
+                                    case "Activity":
+                                        return (
+                                            <div>
+                                                {activeTab + " tab content"}
+                                            </div>
+                                        );
+                                }
+                            })()}
+                        </div>
                     </div>
-                    <MainFrameSeparator />
-                    <div className="userPage_tabContent">
-                        {(() => {
-                            switch (activeTab) {
-                                case "Profile":
-                                    return (
-                                        <div>
-                                            { activeTab + " tab content" }
-                                        </div>
-                                    ); 
-                                case "Activity":
-                                    return(
-                                        <div>
-                                            { activeTab + " tab content" }
-                                        </div>
-                                    );
-                            }
-                        })()}
-                    </div>
-                </div>
+                }
             </MaineFrame>
         </div>
     );

@@ -27,8 +27,10 @@ function RequestCreateNewGroupPage() {
         const name = document.getElementById("requestCreateNewGroupPage_name").value;
         const description = document.getElementById("requestCreateNewGroupPage_description").value;
 
-        const result = await forumService.addNewGroup(name, description);
+        const result = await forumService.requestAddGroup(name, description);
         if (result.status) {
+            alert("Sent");
+
             navigate('/');
         }
         else {

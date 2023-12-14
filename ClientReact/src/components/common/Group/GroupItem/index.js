@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom";
 
 import authService from '../../../../services/AuthService';
@@ -7,14 +6,13 @@ import authService from '../../../../services/AuthService';
 import './GroupItem.css'
 
 function GroupItem(props) {
-    const params = useParams();
     const [authorName, setAuthorName] = useState('');
 
     useEffect(() => {
         async function loadAuthorName() {
             const result = await authService.getUserInfo(props.post.authorId);
             if (result.status) {
-                setAuthorName(result.data.userName);
+                setAuthorName(result.data.name);
             }
             else {
                 alert(result.message);

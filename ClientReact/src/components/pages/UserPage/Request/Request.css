@@ -1,0 +1,41 @@
+.request_item_container {
+    margin-bottom: 10px;
+}
+
+.request_item {
+    display: flex;
+    height: 70px;
+}
+
+.request_item > img {
+    padding: 10px;
+    display: block;
+    margin: auto;
+}
+
+.request_item_name_description {
+    width: 100%;
+    margin: auto 0;
+}
+
+.request_item_name_description > p {
+    margin: auto 0;
+}
+
+.request_item_status {
+    width: 100px;
+    margin: auto 0;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.request_item_buttons {
+    display: flex;
+    justify-content: right;
+}
+
+.request_item_buttons > button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+

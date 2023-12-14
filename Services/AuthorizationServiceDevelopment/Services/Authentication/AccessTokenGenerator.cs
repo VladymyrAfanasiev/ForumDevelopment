@@ -22,8 +22,9 @@ namespace AuthorizationServiceDevelopment.Services.Authentication
 			List<Claim> claims = new List<Claim>()
 			{
 				new Claim(ClaimTypes.NameIdentifier, userModel.Id.ToString()),
-				new Claim(ClaimTypes.Name, userModel.UserName),
+				new Claim(ClaimTypes.Name, userModel.Name),
 				new Claim(ClaimTypes.Email, userModel.Email),
+				new Claim(ClaimTypes.Role, ((int)userModel.Role).ToString())
 			};
 
 			DateTime expirationDateTime = DateTime.UtcNow.AddMinutes(configuration.AccessTokenExpirationMinutes);

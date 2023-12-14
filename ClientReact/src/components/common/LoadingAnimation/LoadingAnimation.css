@@ -12,7 +12,8 @@
     border: 8px solid;
     border-color: var(--theme-color) transparent var(--theme-color) transparent;
     border-radius: 50%;
-    animation: loadingAnimation_spin_animation 1.2s linear infinite;
+    background: transparent;
+    animation: loadingAnimation_spin_animation 1.5s linear infinite;
 }
 
 @keyframes loadingAnimation_spin_animation {

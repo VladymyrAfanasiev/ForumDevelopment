@@ -15,6 +15,8 @@ namespace ForumServiceDevelopment.Data
 		{
 			base.OnModelCreating(modelBuilder);
 
+			modelBuilder.Entity<GroupRequest>();
+
 			modelBuilder.Entity<Group>()
 				.HasMany(g => g.Posts)
 				.WithOne(gi => gi.Group)
@@ -31,6 +33,7 @@ namespace ForumServiceDevelopment.Data
 				.HasForeignKey(cl => cl.CommentId);
 		}
 
+		public DbSet<GroupRequest> GroupRequests { get; set; }
 
 		public DbSet<Group> Groups { get; set; }
 

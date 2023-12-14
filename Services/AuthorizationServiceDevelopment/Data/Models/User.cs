@@ -2,10 +2,10 @@
 
 namespace AuthorizationServiceDevelopment.Data.Models
 {
-	public enum RoleNames
+	public enum UserRole
 	{
-		User,
-		Admin
+		User = 0,
+		Admin = 1
 	}
 
 	public class User
@@ -23,7 +23,7 @@ namespace AuthorizationServiceDevelopment.Data.Models
 
 		public DateTime JoinedOn { get; set; }
 
-		public RoleNames Role { get; set;}
+		public UserRole Role { get; set;}
 
 	}
 }

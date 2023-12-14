@@ -5,6 +5,76 @@ class ForumService {
 
     }
 
+    async getRequests() {
+        try {
+            const response = await axios.get('/api/group/request', {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async requestAddGroup(name, description) {
+        try {
+            const data = {
+                Name: name,
+                Description: description
+            };
+
+            const response = await axios.put('/api/group/request', data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async approveRequest(id) {
+        try {
+            const response = await axios.post('/api/group/request/' + id, {} , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
     async getGroups() {
         try {
             const response = await axios.get('/api/group', {}, {
@@ -60,32 +130,6 @@ class ForumService {
             return {
                 status: true,
                 data: response.data,
-                message: ''
-            };
-        }
-        catch (error) {
-            return {
-                status: false,
-                message: error.response.data
-            };
-        }
-    }
-
-    async addNewGroup(name, description) {
-        try {
-            const data = {
-                Name: name,
-                Description: description
-            };
-
-            const response = await axios.put('/api/group', data, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            return {
-                status: true,
                 message: ''
             };
         }

@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using ForumServiceDevelopment.Data.Models;
 
-namespace ForumServiceDevelopment.Models
+namespace ForumServiceDevelopment.Models.Requests
 {
-	public class GroupCreationModel
+	public class RequestAddGroupModel
 	{
-		public GroupCreationModel()
+		public RequestAddGroupModel()
 		{
 
 		}
 
-		public GroupCreationModel(Group model)
+		public RequestAddGroupModel(Group model)
 		{
 			Name = model.Name;
 			Description = model.Description;
@@ -22,7 +21,17 @@ namespace ForumServiceDevelopment.Models
 
 		public string Description { get; set; }
 
-		public Group ToEntity()
+		public GroupRequest ToGroupRequestEntity()
+		{
+			return new GroupRequest
+			{
+				Name = Name,
+				Description = Description,
+				Status = RequestStatusEnum.New
+			};
+		}
+
+		public Group ToGroupEntity()
 		{
 			return new Group
 			{

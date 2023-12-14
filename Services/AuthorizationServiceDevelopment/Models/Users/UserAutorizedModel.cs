@@ -14,8 +14,9 @@ namespace AuthorizationServiceDevelopment.Models.Users
 		public UserAutorizedModel(UserModel userModel, AccessToken token)
 		{
 			Id = userModel.Id;
-			UserName = userModel.UserName;
+			UserName = userModel.Name;
 			Email = userModel.Email;
+			Role = userModel.Role;
 			JoinedOn = userModel.JoinedOn;
 			Token = token.Token;
 			ExpirationTime = token.ExpirationTime;
@@ -27,6 +28,8 @@ namespace AuthorizationServiceDevelopment.Models.Users
 
 		[EmailAddress]
 		public string Email { get; }
+
+		public UserRole Role { get; }
 
 		public DateTime JoinedOn { get; }
 

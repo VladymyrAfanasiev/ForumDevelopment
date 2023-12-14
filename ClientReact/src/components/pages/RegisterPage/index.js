@@ -90,7 +90,9 @@ function RegisterPage() {
                 {
                     isLoading ? (
                         <button className="root_button_loading">
-                            <Trans>Register</Trans>
+                            <span className="root_button_text">
+                                <Trans>Register</Trans>
+                            </span>
                         </button>
                     ) : (
                         <button className="root_button" onClick={registerClick}>

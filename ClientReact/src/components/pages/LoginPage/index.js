@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation } from 'react-i18next';
 import { Trans, Plural, Select } from 'react-i18next/icu.macro';
@@ -15,6 +15,10 @@ function LoginPage() {
     const dispatch = useDispatch();
     const [isLoginFormEmpty, setIsLoginFormEmpty] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoginFormEmpty(false);
+    })
 
     function handleLoginFormChange(e) {
         setIsLoginFormEmpty(e.target.value == "" ? true : false);
@@ -56,7 +60,9 @@ function LoginPage() {
                 {
                     isLoading ? (
                         <button className="root_button_loading">
-                            <Trans>Login</Trans>
+                            <span className="root_button_text">
+                                <Trans>Login</Trans>
+                            </span>
                         </button>
                     ): (
                         isLoginFormEmpty? (

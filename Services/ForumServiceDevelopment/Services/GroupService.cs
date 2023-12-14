@@ -3,6 +3,7 @@ using ForumServiceDevelopment.Data.Models;
 using ForumServiceDevelopment.Models;
 using ForumServiceDevelopment.Models.Comments;
 using ForumServiceDevelopment.Models.Posts;
+using ForumServiceDevelopment.Models.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace ForumServiceDevelopment.Services
@@ -14,6 +15,57 @@ namespace ForumServiceDevelopment.Services
 		public GroupService(ForumDatabaseContext databaseContext)
 		{
 			this.databaseContext = databaseContext;
+		}
+
+		public List<RequestGroupModel> GetRequests()
+		{
+			return this.databaseContext.GroupRequests
+				.Select(r => new RequestGroupModel(r))
+				.ToList();
+		}
+
+		public List<RequestGroupModel> GetRequests(Guid authorId)
+		{
+			return this.databaseContext.GroupRequests
+				.Where(gr => gr.AuthorId == authorId)
+				.Select(gr => new RequestGroupModel(gr))
+				.ToList();
+		}
+
+		public RequestGroupModel AddGroupRequest(RequestAddGroupModel model, Guid authorId)
+		{
+			GroupRequest groupRequest = model.ToGroupRequestEntity();
+			groupRequest.AuthorId = authorId;
+
+			this.databaseContext.GroupRequests.Add(groupRequest);
+			this.databaseContext.SaveChanges();
+
+			return new RequestGroupModel(groupRequest);
+		}
+
+		public RequestGroupModel ApproveRequest(Guid requestId)
+		{
+			GroupRequest groupRequest = this.databaseContext.GroupRequests.FirstOrDefault(gr => gr.Id == requestId);
+			if (groupRequest == null)
+			{
+				return null;
+			}
+
+			Group existedGroup = this.databaseContext.Groups.FirstOrDefault(gr => gr.Name == groupRequest.Name);
+			if (existedGroup != null)
+			{
+				return null;
+			}
+
+			RequestGroupModel requestModel = new RequestGroupModel(groupRequest);
+			Group newGroup = requestModel.ToGroupEntity();
+
+			groupRequest.Status = RequestStatusEnum.Approved;
+
+			this.databaseContext.Groups.Add(newGroup);
+			this.databaseContext.SaveChanges();
+
+			return new RequestGroupModel(groupRequest);
 		}
 
 		public List<GroupSimpleModel> GetGroups()
@@ -36,7 +88,7 @@ namespace ForumServiceDevelopment.Services
 			return new GroupFullModel(group);
 		}
 
-		public GroupFullModel AddGroup(GroupCreationModel model, Guid authorId)
+		public GroupFullModel AddGroup(RequestAddGroupModel model, Guid authorId)
 		{
 			Group existedGroup = this.databaseContext.Groups.FirstOrDefault(g => g.Name == model.Name);
 			if (existedGroup != null)
@@ -44,7 +96,7 @@ namespace ForumServiceDevelopment.Services
 				return null;
 			}
 
-			Group newGroup = model.ToEntity();
+			Group newGroup = model.ToGroupEntity();
 			newGroup.AuthorId = authorId;
 
 			this.databaseContext.Groups.Add(newGroup);

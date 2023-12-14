@@ -5,7 +5,8 @@ class AuthService {
             isAuthenticated: false,
             user: {
                 id: -1000,
-                name: ""
+                name: "",
+                role: -1
             }
         };
     }
@@ -29,7 +30,8 @@ class AuthService {
                 user: {
                     id: response.data.id,
                     userName: response.data.userName,
-                    email: response.data.email
+                    email: response.data.email,
+                    role: response.data.role
                 }
             };
 
@@ -75,7 +77,8 @@ class AuthService {
                 user: {
                     id: response.data.id,
                     userName: response.data.userName,
-                    email: response.data.email
+                    email: response.data.email,
+                    role: response.data.role
                 }
             };
 
@@ -92,7 +95,8 @@ class AuthService {
                 isAuthenticated: false,
                 user: {
                     id: -1000,
-                    name: ''
+                    name: '',
+                    role: -1
                 }
             };
 
@@ -112,7 +116,8 @@ class AuthService {
             isAuthenticated: false,
             user: {
                 id: -1000,
-                name: ""
+                name: "",
+                role: -1
             }
         };
 
@@ -154,6 +159,7 @@ class AuthService {
     }
 }
 
+//https://github.com/bezkoder/react-redux-jwt-auth/blob/master/src/services/auth.service.js
 const authService = new AuthService();
 
 export default authService;

@@ -35,7 +35,7 @@ function GroupItemPage() {
 
             const authorResult = await authService.getUserInfo(result.data.authorId);
             if (authorResult.status) {
-                setAuthorName(authorResult.data.userName);
+                setAuthorName(authorResult.data.name);
             }
             else {
                 setAuthorName(result.data.authorId);

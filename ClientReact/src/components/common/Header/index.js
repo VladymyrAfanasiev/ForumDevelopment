@@ -21,8 +21,8 @@ function Header() {
     recognition.addEventListener("end", () => {
         document.getElementById("header_search_input").value = transcript;
     });
-    
-    function searchButtonClick () {
+
+    function searchButtonClick() {
         const searchValue = document.getElementById("header_search_input").value;
         if (searchValue == "") {
             return;
@@ -31,11 +31,11 @@ function Header() {
         navigate("search/" + searchValue);
     }
 
-    async function logoutClicked () {
+    async function logoutClicked() {
         const success = await authService.logoutAsync();
         if (success) {
             const newUserInfo = await authService.getAuthenticationInfoAsync();
-            dispatch(setAuthUserInfo({newUserInfo}));
+            dispatch(setAuthUserInfo({ newUserInfo }));
             navigate('/')
         }
     }
@@ -69,6 +69,16 @@ function Header() {
                                             }
                                         </Link>
                                     </li>
+                                    {
+                                        authUserInfo?.user?.role == 1 &&
+                                        <li>
+                                            <Link className="root_a_button" to="/admin">
+                                                {
+                                                    t("Admin")
+                                                }
+                                            </Link>
+                                        </li>
+                                    }
                                     <li>
                                         <Link className="root_a_button" to="/about">
                                             {
@@ -84,7 +94,7 @@ function Header() {
                                         t("Forum name")
                                     }
                                 </Link>
-                            </div>     
+                            </div>
                         </div>
                     ) : (
                         <div className="header_home">
@@ -93,13 +103,13 @@ function Header() {
                                     t("Forum name")
                                 }
                             </Link>
-                        </div>   
+                        </div>
                     )
                 }
                 {
                     authUserInfo?.isAuthenticated ? (
                         <div className="header_left">
-			
+
                             <div className="header_search">
                                 <input id="header_search_input" autoComplete="off" type="text" placeholder={t("I search...")} />
                                 <button onClick={SpeechRecognition.startListening}>
@@ -119,7 +129,7 @@ function Header() {
                                 </button>
                                 <ul className="header_menu_dropdown" id="header_menu_dropdown">
                                     <li>
-                                        <Link className="root_a_button" to={ "/user/" + authUserInfo?.user?.id }>
+                                        <Link className="root_a_button" to={"/user/" + authUserInfo?.user?.id}>
                                             {
                                                 t("Profile")
                                             }

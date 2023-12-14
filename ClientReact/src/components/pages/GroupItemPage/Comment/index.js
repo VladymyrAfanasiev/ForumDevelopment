@@ -33,7 +33,7 @@ function Comment(props) {
 
             const authorResult = await authService.getUserInfo(props.comment.authorId);
             if (authorResult.status) {
-                setAuthorName(authorResult.data.userName);
+                setAuthorName(authorResult.data.name);
             }
             else {
                 setAuthorName(props.comment.authorId);
