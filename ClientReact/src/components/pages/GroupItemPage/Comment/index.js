@@ -6,6 +6,7 @@ import dateFormat from "dateformat";
 
 import authService from '../../../../services/AuthService';
 import forumService from '../../../../services/ForumService';
+import publicVaultService from '../../../../services/PublicVaultService';
 
 import './Comment.css';
 
@@ -20,23 +21,26 @@ function Comment(props) {
     const navigate = useNavigate();
     const [reactions, setReactions] = useState({});
     const [authorName, setAuthorName] = useState('');
+    const [userImageUrl, setUserImageUrl] = useState('/img/anon.png');
 
     useEffect(() => {
         async function loadReactions() {
-            const result = await forumService.getCommentReactions(props.comment.id);
-            if (result.status !== true) {
-                alert(result.message);
-                return;
+            let result = await forumService.getCommentReactions(props.comment.id);
+            if (result.status) {
+                setReactions(result.data);
             }
 
-            setReactions(result.data);
-
-            const authorResult = await authService.getUserInfo(props.comment.authorId);
-            if (authorResult.status) {
-                setAuthorName(authorResult.data.name);
+            result = await authService.getUserInfo(props.comment.authorId);
+            if (result.status) {
+                setAuthorName(result.data.name);
             }
             else {
                 setAuthorName(props.comment.authorId);
+            }
+
+            result = await publicVaultService.getUserImageUrl(props.comment.authorId);
+            if (result.status) {
+                setUserImageUrl(result.data);
             }
         }
 
@@ -80,7 +84,7 @@ function Comment(props) {
     return (
         <div className="comment_content">
             <div className="comment_autor_img">
-                <img src="/img/anon.png" />
+                <img src={userImageUrl} />
             </div>
             <div className="comment_body">
                 <div className="comment_title">

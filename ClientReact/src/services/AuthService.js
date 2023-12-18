@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+
 class AuthService {
     constructor() {
         this.authenticationInfo = {
@@ -34,6 +35,9 @@ class AuthService {
                     role: response.data.role
                 }
             };
+
+            // TODO: redux
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
 
             return {
                 status: true,

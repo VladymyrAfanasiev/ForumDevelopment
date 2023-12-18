@@ -10,6 +10,7 @@ import Request from './Request';
 
 import authService from '../../../services/AuthService';
 import forumService from '../../../services/ForumService';
+import publicVaultService from '../../../services/PublicVaultService';
 
 import "./UserPage.css";
 
@@ -17,20 +18,24 @@ function UserPage() {
     const params = useParams();
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
+    const [userImageUrl, setUserImageUrl] = useState('/img/anon.png');
     const [currentUserInfo, setCurrentUserInfo] = useState({});
     const [requests, setRequests] = useState([]);
     const [activeTab, setActiveTab] = useState('Requests');
 
     useEffect(() => {
         async function loadUserInfo() {
-            const result = await authService.getUserInfo(params.id);
-            if (result.status) {
-                setUserInfo(result.data);
-            }
-            else {
-                alert(result.message);
-
+            let result = await authService.getUserInfo(params.id);
+            if (result.status !== true) {
                 navigate('/');
+                return;
+            }
+
+            setUserInfo(result.data);
+
+            result = await publicVaultService.getUserImageUrl(params.id);
+            if (result.status) {
+                setUserImageUrl(result.data);
             }
 
             const authenticationInfo = authService.getAuthenticationInfo();
@@ -66,7 +71,7 @@ function UserPage() {
             <MaineFrame name={userInfo.userName} title="User name">
                 <div className="userPage_userGeneralInfo">
                     <div className="userPage_img">
-                        <img src="/img/anon.png" />
+                        <img src={userImageUrl} />
                     </div>
                     <div className="userPage_shortDescription">
                         <p>User name: {userInfo.name}</p>

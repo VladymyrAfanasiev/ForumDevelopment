@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc.WebApiCompatShim;
 
 namespace APIGatewayServiceDevelopment
 {
@@ -21,31 +19,18 @@ namespace APIGatewayServiceDevelopment
 
 		public async Task<HttpResponseMessage> SendRequest(HttpRequest httpRequest)
 		{
-			string requestContent;
-			using (Stream receiveStream = httpRequest.Body)
-			{
-				using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
-				{
-					requestContent = await readStream.ReadToEndAsync();
-				}
-			}
+			HttpRequestMessageFeature hreqmf = new HttpRequestMessageFeature(httpRequest.HttpContext);
+			HttpRequestMessage httpRequestMessage = hreqmf.HttpRequestMessage;
 
-			using (HttpRequestMessage newRequest = new HttpRequestMessage(new HttpMethod(httpRequest.Method), CreateDestinationUri(httpRequest)))
-			{
-				newRequest.Content = new StringContent(requestContent, Encoding.UTF8, httpRequest.ContentType);
+			// redirect
+			httpRequestMessage.RequestUri = CreateDestinationUri(httpRequest);
 
-				foreach (var header in httpRequest.Headers)
-				{
-					newRequest.Headers.TryAddWithoutValidation(header.Key, header.Value.ToString());
-				}
-
-				return await client.SendAsync(newRequest);
-			}
+			return await client.SendAsync(httpRequestMessage);
 		}
 
-		private string CreateDestinationUri(HttpRequest request)
+		private Uri CreateDestinationUri(HttpRequest request)
 		{
-			return $"{this.serviceUri.Scheme}://{this.serviceUri.Authority}{request.Path}";
+			return new Uri($"{this.serviceUri.Scheme}://{this.serviceUri.Authority}{request.Path}");
 		}
 	}
 }

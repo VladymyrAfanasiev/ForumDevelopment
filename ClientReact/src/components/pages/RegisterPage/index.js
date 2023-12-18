@@ -6,6 +6,7 @@ import { Trans, Plural, Select } from 'react-i18next/icu.macro';
 import { setAuthUserInfo } from "../../../redux/slice/authUserInfoSlice";
 
 import authService from '../../../services/AuthService';
+import publicVaultService from '../../../services/PublicVaultService';
 
 import "./RegisterPage.css";
 
@@ -30,24 +31,31 @@ function RegisterPage() {
         const password = document.getElementById("registerPage_Password").value;
         const confirmPassword = document.getElementById("registerPage_confirmPassword").value;
         if (password != confirmPassword) {
-            // error
-
-            alert("Password in not equal to Confirm Password")
-
+            alert("Password in not equal to confirm password")
+            setIsLoading(false);
             return;
         }
 
         const userName = document.getElementById("registerPage_userName").value;
         const email = document.getElementById("registerPage_email").value;
-        const result = await authService.registerAsync(userName, email, password);
-        if (result.status) {
-            const authUserInfo = authService.getAuthenticationInfo();
-            dispatch(setAuthUserInfo(authUserInfo));
-            navigate("/");
-        }
-        else {
+        let result = await authService.registerAsync(userName, email, password);
+        if (result.status != true) {
             alert(result.message);
+            setIsLoading(false);
+            return;
         }
+
+        if (userImage) {
+            let result = await publicVaultService.uploadUserImage(userImage);
+            if (result.status != true) {
+                // show just warning
+                alert(result.message);
+            }
+        }
+
+        const authUserInfo = authService.getAuthenticationInfo();
+        dispatch(setAuthUserInfo(authUserInfo));
+        navigate("/");
 
         setIsLoading(false);
     }
