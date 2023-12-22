@@ -21,8 +21,6 @@ namespace ForumServiceDevelopment.Services
 
 		GroupFullModel GetGroupById(Guid groupId);
 
-		GroupFullModel AddGroup(RequestAddGroupModel model, Guid authorId);
-
 
 
 		List<PostSimpleModel> GetPosts(string text);

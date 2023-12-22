@@ -88,24 +88,6 @@ namespace ForumServiceDevelopment.Services
 			return new GroupFullModel(group);
 		}
 
-		public GroupFullModel AddGroup(RequestAddGroupModel model, Guid authorId)
-		{
-			Group existedGroup = this.databaseContext.Groups.FirstOrDefault(g => g.Name == model.Name);
-			if (existedGroup != null)
-			{
-				return null;
-			}
-
-			Group newGroup = model.ToGroupEntity();
-			newGroup.AuthorId = authorId;
-
-			this.databaseContext.Groups.Add(newGroup);
-			this.databaseContext.SaveChanges();
-
-			return new GroupFullModel(newGroup);
-		}
-
-
 		public List<PostSimpleModel> GetPosts(string text)
 		{
 			return this.databaseContext.Posts

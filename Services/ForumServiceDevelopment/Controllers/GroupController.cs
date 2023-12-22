@@ -47,26 +47,18 @@ namespace ForumServiceDevelopment.Controllers
 		public IActionResult RequestAddGroup(RequestAddGroupModel requestAddGroupModel)
 		{
 			UserInfo userInfo = GetAuthorizedUserInfo();
+			RequestGroupModel model = this.groupService.AddGroupRequest(requestAddGroupModel, userInfo.Id);
+			if (model == null)
+			{
+				return BadRequest();
+			}
+
 			if (userInfo.Role == UserRole.Admin)
 			{
-				GroupFullModel model = this.groupService.AddGroup(requestAddGroupModel, userInfo.Id);
-				if (model == null)
-				{
-					return BadRequest("Group already exists");
-				}
-
-				return Ok(model);
-			}
-			else if (userInfo.Role == UserRole.User)
-			{
-				RequestGroupModel model = this.groupService.AddGroupRequest(requestAddGroupModel, userInfo.Id);
-				if (model != null)
-				{
-					return Ok(model);
-				}
+				this.groupService.ApproveRequest(model.Id);
 			}
 
-			return BadRequest();
+			return Ok(model);
 		}
 
 		[Authorize]
