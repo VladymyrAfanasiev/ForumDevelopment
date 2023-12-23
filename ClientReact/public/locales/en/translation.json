@@ -36,5 +36,7 @@
     "Enter item name" : "Enter item name",
     "Enter a content" : "Enter a content",
     "Activity": "Activity",
-    "Posts" : "Posts"
+    "Posts" : "Posts",
+    "Requests" : "Requests",
+    "Settings" : "Settings"
 }

@@ -13,5 +13,5 @@ export const AuthLayout = ({ children }) => {
       }
    }, [authService])
 
-   return <div>{outlet}</div>;
+    return <div style={{ "height": "100%", "width": "100%" }} >{outlet}</div>;
 };

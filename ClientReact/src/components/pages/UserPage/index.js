@@ -43,7 +43,7 @@ function UserPage() {
         }
 
         async function loadRequests() {
-            const result = await forumService.getRequests();
+            const result = await forumService.getUserRequests();
             if (result.status) {
                 setRequests(result.data);
             }

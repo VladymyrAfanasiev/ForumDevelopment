@@ -24,20 +24,25 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpGet("request")]
 		public IActionResult GetRequests()
 		{
-			List<RequestGroupModel> models;
 			UserInfo userInfo = GetAuthorizedUserInfo();
-			if (userInfo.Role == UserRole.Admin)
-			{
-				models = this.groupService.GetRequests();
-			}
-			else if (userInfo.Role == UserRole.User)
-			{
-				models = this.groupService.GetRequests(userInfo.Id);
-			}
-			else
+
+			// TODO: move role check to attribute
+			if (userInfo.Role != UserRole.Admin)
 			{
 				return BadRequest();
 			}
+
+			List<RequestGroupModel> models = this.groupService.GetRequests();
+
+			return Ok(models);
+		}
+
+		[Authorize]
+		[HttpGet("userrequest")]
+		public IActionResult GetUserRequests()
+		{
+			UserInfo userInfo = GetAuthorizedUserInfo();
+			List<RequestGroupModel> models = this.groupService.GetRequests(userInfo.Id);
 
 			return Ok(models);
 		}
@@ -66,6 +71,7 @@ namespace ForumServiceDevelopment.Controllers
 		public IActionResult AddGroup(Guid requestId)
 		{
 			UserInfo userInfo = GetAuthorizedUserInfo();
+			// TODO: move role check to attribute
 			if (userInfo.Role != UserRole.Admin)
 			{
 				return BadRequest("You do not have enough permissions for the operation");

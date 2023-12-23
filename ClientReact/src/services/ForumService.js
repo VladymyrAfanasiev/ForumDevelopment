@@ -27,6 +27,28 @@ class ForumService {
         }
     }
 
+    async getUserRequests() {
+        try {
+            const response = await axios.get('/api/group/userrequest', {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
     async requestAddGroup(name, description) {
         try {
             const data = {
