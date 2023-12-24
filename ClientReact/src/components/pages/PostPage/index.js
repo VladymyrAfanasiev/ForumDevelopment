@@ -12,9 +12,9 @@ import Comment from './Comment';
 import authService from '../../../services/AuthService';
 import forumService from '../../../services/ForumService';
 
-import './GroupItemPage.css';
+import './PostPage.css';
 
-function GroupItemPage() {
+function PostPage() {
     const params = useParams();
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
@@ -24,7 +24,7 @@ function GroupItemPage() {
 
     useEffect(() => {
         async function loadPost() {
-            const result = await forumService.getGroupItemById(params.groupId, params.postId);
+            const result = await forumService.getPostById(params.groupId, params.postId);
             if (result.status !== true) {
                 alert(result.message);
                 return;
@@ -67,15 +67,15 @@ function GroupItemPage() {
     }
 
     return (
-        <div className="groupItemPage_content">
+        <div className="postPage_content">
             <MaineFrame name={post.name}>
-                <div className="groupItemPage_item">
-                    <p className="groupItemPage_text">
+                <div className="postPage_item">
+                    <p className="postPage_text">
                         {
                             post.text
                         }
                     </p>
-                    <div className="groupItemPage_author">
+                    <div className="postPage_author">
                         <p2>{t("Author")}</p2>
                         <Link to={"/user/" + post.authorId}>
                             {
@@ -86,14 +86,14 @@ function GroupItemPage() {
                 </div>
             </MaineFrame>
             <MaineFrame name={t("Comments")}>
-                <div className="groupItemPage_comments">
+                <div className="postPage_comments">
                     {
                         comments.map(item => <Comment comment={item} />)
                     }
                 </div>
             </MaineFrame>
             <MaineFrame name={t("Add Commnet")}>
-                <div className="groupItemPage_addNewComment">
+                <div className="postPage_addNewComment">
                     {
                         <NewComment postId={post.postId} addNewCommentHandler={addNewCommentHandler} />
                     }
@@ -103,4 +103,4 @@ function GroupItemPage() {
     );
 }
 
-export default withTranslation('translation') (GroupItemPage);
+export default withTranslation('translation') (PostPage);

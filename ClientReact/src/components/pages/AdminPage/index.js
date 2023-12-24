@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Trans } from 'react-i18next/icu.macro';
 
 import MaineFrame from '../../common/MainFrame';
-import Request from '../UserPage/Request';
+import Request from '../../common/Request';
 
 import authService from '../../../services/AuthService';
 import forumService from '../../../services/ForumService';

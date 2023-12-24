@@ -5,7 +5,7 @@ import { Trans, Plural, Select } from 'react-i18next/icu.macro';
 
 import forumService from '../../../services/ForumService';
 import MainFrame from "../../common/MainFrame"
-import GroupItem from "../../common/Group/GroupItem"
+import Post from "../../common/Post"
 import './SearchPage.css';
 
 function SearchPage() {
@@ -31,7 +31,7 @@ function SearchPage() {
         <div className="searchPage_content">
             <MainFrame name={t("Posts")}>
                 {
-                    searchItems.map(post => <GroupItem post={post} /> )
+                    searchItems.map(post => <Post post={post} /> )
                 }
             </MainFrame>
         </div>)

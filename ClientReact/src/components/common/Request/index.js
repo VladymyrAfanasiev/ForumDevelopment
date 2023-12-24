@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import dateFormat from "dateformat";
 import { Trans, Plural, Select } from 'react-i18next/icu.macro';
 
-import MainFrame from '../../../common/MainFrame'
+import MainFrame from '../MainFrame'
 
-import authService from '../../../../services/AuthService';
-import forumService from '../../../../services/ForumService';
+import authService from '../../../services/AuthService';
+import forumService from '../../../services/ForumService';
 
 import './Request.css';
 

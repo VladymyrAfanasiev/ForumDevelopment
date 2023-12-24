@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import authService from '../../../../services/AuthService';
+import authService from '../../../services/AuthService';
 
-import './GroupItem.css'
+import './Post.css'
 
-function GroupItem(props) {
+function Post(props) {
     const [authorName, setAuthorName] = useState('');
 
     useEffect(() => {
@@ -23,9 +23,9 @@ function GroupItem(props) {
     }, [props])
 
     return (
-        <div className="groupItem">
+        <div className="post">
             <img width={40} height={40} src="/img/forum.svg" alt="" />
-            <div className="groupItemInfo">
+            <div className="postInfo">
                 <h4>
                     <Link to={"/group/" + '00000000-0000-0000-0000-000000000000' + "/post/" + props.post.id}>
                         {
@@ -39,8 +39,8 @@ function GroupItem(props) {
                     }
                 </p>
             </div>
-            <div className="groupItemCommentsCount">{props.post.commentsCount}</div>
-            <div className="groupItemAuthor">
+            <div className="postCommentsCount">{props.post.commentsCount}</div>
+            <div className="postAuthor">
                 <Link to={"/user/" + props.post.authorId}>
                     {
                         authorName
@@ -51,4 +51,4 @@ function GroupItem(props) {
     );
 }
 
-export default GroupItem;
+export default Post;

@@ -61,7 +61,7 @@
     transition: 0.2s;
 }
 
-.groupItemsContainer ol {
+.postsContainer ol {
     padding: 0px;
     margin: 0px;
     list-style: none;
@@ -77,7 +77,7 @@
     height: 25px;
 }
 
-.groupItemsContainer_openMove {
+.postsContainer_openMove {
     display: flex;
     justify-content: center;
     padding: 5px 0px 10px 0px;

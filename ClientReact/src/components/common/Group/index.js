@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import './Group.css'
 
-import GroupItem from './GroupItem';
+import Post from '../Post';
 
 function Group(props) {
     const { t, i18n } = useTranslation();
@@ -16,18 +16,18 @@ function Group(props) {
                         props.group.name
                     }
                 </Link>
-                <Link title={t("Add new group item")} className="addNewGroup_a_button" to={'/addNewGroupItem/' + props.group.id}></Link>
+                <Link title={t("Add new post")} className="addNewGroup_a_button" to={'/addNewPost/' + props.group.id}></Link>
             </h2>
-            <div className="groupItemsContainer">
+            <div className="postsContainer">
                 <ol>
                     {
                         props.simpleView ?
-                            props.group.posts.slice(0, 3).map(post => <li><GroupItem post={post} /></li>) :
-                            props.group.posts.map(post => <li><GroupItem post={post} /></li>)
+                            props.group.posts.slice(0, 3).map(post => <li><Post post={post} /></li>) :
+                            props.group.posts.map(post => <li><Post post={post} /></li>)
                     }
                     {
                         props.simpleView && props.group.posts.length > 3 ? (
-                            <li className="groupItemsContainer_openMove">
+                            <li className="postsContainer_openMove">
                                 <Link className="root_a_button" to={'/group/' + props.group.id}>
                                     {
                                         t("Open more items...")

@@ -6,7 +6,7 @@ import dateFormat from "dateformat";
 
 import MaineFrame from '../../common/MainFrame';
 import MainFrameSeparator from '../../common/MainFrameSeparator';
-import Request from './Request';
+import Request from '../../common/Request';
 
 import authService from '../../../services/AuthService';
 import forumService from '../../../services/ForumService';

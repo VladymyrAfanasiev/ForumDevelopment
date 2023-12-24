@@ -141,7 +141,7 @@ class ForumService {
         }
     }
 
-    async getGroupItemById(groupId, postId) {
+    async getPostById(groupId, postId) {
         try {
             const response = await axios.get('/api/group/' + groupId + '/post/' + postId, {}, {
                 headers: {
@@ -163,7 +163,7 @@ class ForumService {
         }
     }
 
-    async addNewGroupItem(groupId, postName, text) {
+    async addNewPost(groupId, postName, text) {
         try {
             const data = {
                 name: postName,

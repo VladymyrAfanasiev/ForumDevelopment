@@ -6,14 +6,14 @@ import { Provider } from "react-redux";
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import MainPage from './components/pages/MainPage';
-import GroupItemPage from './components/pages/GroupItemPage';
+import PostPage from './components/pages/PostPage';
 import RequestCreateNewGroupPage from './components/pages/RequestCreateNewGroupPage';
 import AboutPage from './components/pages/AboutPage';
 import LoginPage from './components/pages/LoginPage';
 import RegisterLicencePage from './components/pages/RegisterLicencePage';
 import RegisterPage from './components/pages/RegisterPage';
 import GroupPage from './components/pages/GroupPage';
-import AddNewGroupItemPage from './components/pages/AddNewGroupItemPage';
+import AddNewPostPage from './components/pages/AddNewPostPage';
 import UserPage from './components/pages/UserPage';
 import SearchPage from './components/pages/SearchPage';
 import AdminPage from './components/pages/AdminPage';
@@ -55,10 +55,10 @@ root.render(
             <Route path="register" element={<RegisterPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="group/:id" element={<GroupPage />} />
-            <Route path="group/:groupId/post/:postId" element={<GroupItemPage />} />
+            <Route path="group/:groupId/post/:postId" element={<PostPage />} />
             <Route element={<AuthLayout />}>
               <Route path="requestCreateNewGroup" element={<RequestCreateNewGroupPage />} />
-              <Route path="addNewGroupItem/:id" element={<AddNewGroupItemPage />} />
+              <Route path="addNewPost/:id" element={<AddNewPostPage />} />
               <Route path="user/:id" element={<UserPage />} />
               <Route path="search/:text" element={<SearchPage />} />
               <Route path="admin" element={<AdminPage />} />

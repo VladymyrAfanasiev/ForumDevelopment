@@ -1,21 +1,21 @@
-.addNewGroupItemPage_container {
+.addNewPostPage_container {
     padding: 10px;
 }
 
-.addNewGroupItemPage_content {
+.addNewPostPage_content {
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
 
-.addNewGroupItemPage_content input {
+.addNewPostPage_content input {
     padding: 12px 20px;
     margin: 8px 0;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
 
-.addNewGroupItemPage_content textarea {
+.addNewPostPage_content textarea {
     padding: 12px 20px;
     margin: 8px 0;
     height: 140px;
@@ -25,7 +25,7 @@
     max-width: 100px;
 }
 
-.addNewGroupItemPage_buttonContainer {
+.addNewPostPage_buttonContainer {
     display: flex;
     justify-content: center;
 }

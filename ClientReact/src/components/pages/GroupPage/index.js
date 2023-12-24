@@ -12,7 +12,7 @@ function GroupPage() {
     const [group, setGroup] = useState(undefined);
 
     useEffect(() => {
-        async function loadGroupItems() {
+        async function loadPosts() {
             const result = await forumService.getGroupById(params.id);
             if (result.status) {
                 setGroup(result.data);
@@ -22,7 +22,7 @@ function GroupPage() {
             }
         }
 
-        loadGroupItems();
+        loadPosts();
     }, [params])
 
     return (
