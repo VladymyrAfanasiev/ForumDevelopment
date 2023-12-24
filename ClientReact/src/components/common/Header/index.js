@@ -124,7 +124,7 @@ function Header() {
                             <div className="header_dropdown header_indent">
                                 <button className="root_button">
                                     {
-                                        authUserInfo?.user?.userName
+                                        authUserInfo?.user?.name
                                     }
                                 </button>
                                 <ul className="header_menu_dropdown" id="header_menu_dropdown">

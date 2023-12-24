@@ -12,11 +12,11 @@ namespace AuthorizationServiceDevelopment.Models.Users
 		public UserSimpleModel(User dbModel)
 		{
 			this.Id = dbModel.Id;
-			this.UserName = dbModel.UserName;
+			this.Name = dbModel.UserName;
 		}
 
 		public Guid Id { get; set; }
 
-		public string UserName { get; set; }
+		public string Name { get; set; }
 	}
 }

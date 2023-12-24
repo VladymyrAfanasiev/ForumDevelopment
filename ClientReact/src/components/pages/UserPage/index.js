@@ -68,14 +68,13 @@ function UserPage() {
 
     return (
         <div className="userPage_content">
-            <MaineFrame name={userInfo.userName} title="User name">
+            <MaineFrame name={userInfo.name} title="User name">
                 <div className="userPage_userGeneralInfo">
                     <div className="userPage_img">
                         <img src={userImageUrl} />
                     </div>
                     <div className="userPage_shortDescription">
                         <p>User name: {userInfo.name}</p>
-                        <p>Email: {userInfo.email}</p>
                         <p>Joined date: {dateFormat(userInfo.joinedOn, "mmmm dS, yyyy")}</p>
                     </div>
                 </div>
@@ -89,9 +88,6 @@ function UserPage() {
                             </button>
                             <button className="root_button" id="Profile" onClick={handleTabClick}>
                                 <Trans>Profile</Trans>
-                            </button>
-                            <button className="root_button" id="Activity" onClick={handleTabClick}>
-                                <Trans>Activity</Trans>
                             </button>
                         </div>
                         <MainFrameSeparator />
@@ -111,13 +107,7 @@ function UserPage() {
                                     case "Profile":
                                         return (
                                             <div>
-                                                {activeTab + " tab content"}
-                                            </div>
-                                        );
-                                    case "Activity":
-                                        return (
-                                            <div>
-                                                {activeTab + " tab content"}
+                                                <p>Email: {userInfo.email}</p>
                                             </div>
                                         );
                                 }

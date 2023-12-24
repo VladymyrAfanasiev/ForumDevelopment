@@ -40,11 +40,11 @@ namespace AuthorizationServiceDevelopment.Services
 			return dbModel == null ? null : new UserModel(dbModel);
 		}
 
-		public UserModel GetUserById(Guid id)
+		public UserSimpleModel GetUserById(Guid id)
 		{
 			User dbModel = dbContext.Users.FirstOrDefault(u => u.Id == id);
 
-			return dbModel == null ? null : new UserModel(dbModel);
+			return dbModel == null ? null : new UserSimpleModel(dbModel);
 		}
 
 		public UserModel GetUserByEmail(string email)
@@ -56,7 +56,7 @@ namespace AuthorizationServiceDevelopment.Services
 
 		public bool CheckUserExistance(UserCreationModel creationModel)
 		{
-			User dbModel = dbContext.Users.FirstOrDefault(u => u.UserName == creationModel.UserName ||
+			User dbModel = dbContext.Users.FirstOrDefault(u => u.UserName == creationModel.Name ||
 				u.Email == creationModel.Email);
 
 			return dbModel != null;

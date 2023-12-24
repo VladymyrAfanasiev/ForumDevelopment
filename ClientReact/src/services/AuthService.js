@@ -3,12 +3,7 @@
 class AuthService {
     constructor() {
         this.authenticationInfo = {
-            isAuthenticated: false,
-            user: {
-                id: -1000,
-                name: "",
-                role: -1
-            }
+            isAuthenticated: false
         };
     }
 
@@ -28,16 +23,11 @@ class AuthService {
 
             this.authenticationInfo = {
                 isAuthenticated: true,
-                user: {
-                    id: response.data.id,
-                    userName: response.data.userName,
-                    email: response.data.email,
-                    role: response.data.role
-                }
+                user: response.data.user
             };
 
             // TODO: redux
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.token;
 
             return {
                 status: true,
@@ -78,16 +68,11 @@ class AuthService {
 
             this.authenticationInfo = {
                 isAuthenticated: true,
-                user: {
-                    id: response.data.id,
-                    userName: response.data.userName,
-                    email: response.data.email,
-                    role: response.data.role
-                }
+                user: response.data.user
             };
 
             // TODO: redux
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.token;
 
             return {
                 status: true,
@@ -96,12 +81,7 @@ class AuthService {
         }
         catch (error) {
             this.authenticationInfo = {
-                isAuthenticated: false,
-                user: {
-                    id: -1000,
-                    name: '',
-                    role: -1
-                }
+                isAuthenticated: false
             };
 
             return {
@@ -117,12 +97,7 @@ class AuthService {
         delete axios.defaults.headers.common["Authorization"];
 
         this.authenticationInfo = {
-            isAuthenticated: false,
-            user: {
-                id: -1000,
-                name: "",
-                role: -1
-            }
+            isAuthenticated: false
         };
 
         return {
@@ -133,6 +108,14 @@ class AuthService {
 
     // TODO: Add user info caching
     async getUserInfo(id) {
+        if (this.authenticationInfo.isAuthenticated && this.authenticationInfo.user.id === id) {
+            return {
+                status: true,
+                data: this.authenticationInfo.user,
+                message: ''
+            }; 
+        }
+
         try {
             const response = await axios.get('/api/authorization/user/' + id, {}, {
                 headers: {

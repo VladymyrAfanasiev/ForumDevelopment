@@ -16,7 +16,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 		}
 
 		[Required]
-		public string UserName { get; set; }
+		public string Name { get; set; }
 
 		[Required]
 		public string Password { get; set; }
@@ -29,7 +29,7 @@ namespace AuthorizationServiceDevelopment.Models.Users
 		{
 			return new User
 			{
-				UserName = UserName,
+				UserName = Name,
 				Email = Email
 			};
 		}
