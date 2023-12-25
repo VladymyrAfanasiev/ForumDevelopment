@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Trans } from 'react-i18next/icu.macro';
 
 import authService from '../../../services/AuthService';
 
@@ -39,13 +40,19 @@ function Post(props) {
                     }
                 </p>
             </div>
-            <div className="postCommentsCount">{props.post.commentsCount}</div>
+            <div className="postCommentsCount">
+                <p>{props.post.commentsCount}</p>
+                <p>
+                    <Trans>Comments</Trans>
+                </p>
+            </div>
             <div className="postAuthor">
                 <Link to={"/user/" + props.post.authorId}>
-                    {
-                        authorName
-                    }
+                    <p>{authorName}</p>
                 </Link>
+                <p>
+                    <Trans>Author</Trans>
+                </p>
             </div>
         </div>
     );

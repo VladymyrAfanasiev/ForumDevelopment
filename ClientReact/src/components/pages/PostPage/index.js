@@ -85,14 +85,14 @@ function PostPage() {
                     </div>
                 </div>
             </MaineFrame>
-            <MaineFrame name={t("Comments")}>
+            <MaineFrame name={t("Comment")}>
                 <div className="postPage_comments">
                     {
                         comments.map(item => <Comment comment={item} />)
                     }
                 </div>
             </MaineFrame>
-            <MaineFrame name={t("Add Commnet")}>
+            <MaineFrame name={t("Add Comment")}>
                 <div className="postPage_addNewComment">
                     {
                         <NewComment postId={post.postId} addNewCommentHandler={addNewCommentHandler} />

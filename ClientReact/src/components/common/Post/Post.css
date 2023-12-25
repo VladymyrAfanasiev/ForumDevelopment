@@ -27,13 +27,17 @@
 }
 
 .postCommentsCount {
-    width: 50px;
+    width: 80px;
     margin: auto 0;
 }
 
+.postCommentsCount>p {
+    text-align:center;
+    margin: 1px;
+    font-size: 13px;
+}
+
 .postAuthor {
-    display: flex;
-    justify-content: center;
     width: 150px;
     margin: auto 0;
 }
@@ -41,4 +45,16 @@
 .postAuthor>a {
     text-decoration: none;
     color: var(--theme-color);
+}
+
+.postAuthor>a>p {
+    text-align:center;
+    margin: 1px;
+    font-size: 14px;
+}
+
+.postAuthor>p {
+    text-align:center;
+    margin: 1px;
+    font-size: 14px;
 }
