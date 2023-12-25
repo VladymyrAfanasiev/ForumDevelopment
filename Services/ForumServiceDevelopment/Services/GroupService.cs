@@ -79,7 +79,7 @@ namespace ForumServiceDevelopment.Services
 
 		public GroupFullModel GetGroupById(Guid groupId)
 		{
-			Group group = this.databaseContext.Groups.Include(g => g.Posts).FirstOrDefault(gi => gi.Id == groupId);
+			Group group = this.databaseContext.Groups.Include(g => g.Posts).ThenInclude(p => p.Comments).FirstOrDefault(gi => gi.Id == groupId);
 			if (group == null)
 			{
 				return null;
