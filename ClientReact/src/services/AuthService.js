@@ -1,10 +1,18 @@
 ﻿import axios from 'axios';
 
+import localStorageManager from '../managers/LocalStorageManager';
+
 class AuthService {
     constructor() {
-        this.authenticationInfo = {
-            isAuthenticated: false
-        };
+        let authenticationInfo = localStorageManager.getAuthenticationInfo();
+        if (authenticationInfo) {
+            this.authenticationInfo = authenticationInfo;
+        }
+        else {
+            this.authenticationInfo = {
+                isAuthenticated: false
+            };
+        }
     }
 
     async registerAsync(userName, email, password) {
@@ -26,7 +34,7 @@ class AuthService {
                 user: response.data.user
             };
 
-            // TODO: redux
+            localStorageManager.setAuthenticationInfo(this.authenticationInfo);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.token;
 
             return {
@@ -71,7 +79,7 @@ class AuthService {
                 user: response.data.user
             };
 
-            // TODO: redux
+            localStorageManager.setAuthenticationInfo(this.authenticationInfo);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.token;
 
             return {
@@ -92,8 +100,7 @@ class AuthService {
     }
 
     async logoutAsync() {
-
-        // TODO: redux
+        localStorageManager.removeAuthenticationInfo();
         delete axios.defaults.headers.common["Authorization"];
 
         this.authenticationInfo = {

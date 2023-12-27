@@ -35,7 +35,7 @@ function Header() {
         const success = await authService.logoutAsync();
         if (success) {
             const newUserInfo = await authService.getAuthenticationInfoAsync();
-            dispatch(setAuthUserInfo({ newUserInfo }));
+            dispatch(setAuthUserInfo(newUserInfo));
             navigate('/')
         }
     }
