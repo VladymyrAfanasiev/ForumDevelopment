@@ -7,6 +7,8 @@ class AuthService {
         let authenticationInfo = localStorageManager.getAuthenticationInfo();
         if (authenticationInfo) {
             this.authenticationInfo = authenticationInfo;
+
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.authenticationInfo.token.token;
         }
         else {
             this.authenticationInfo = {
@@ -31,7 +33,8 @@ class AuthService {
 
             this.authenticationInfo = {
                 isAuthenticated: true,
-                user: response.data.user
+                user: response.data.user,
+                token: response.data.token
             };
 
             localStorageManager.setAuthenticationInfo(this.authenticationInfo);
@@ -76,7 +79,8 @@ class AuthService {
 
             this.authenticationInfo = {
                 isAuthenticated: true,
-                user: response.data.user
+                user: response.data.user,
+                token: response.data.token
             };
 
             localStorageManager.setAuthenticationInfo(this.authenticationInfo);
@@ -150,6 +154,14 @@ class AuthService {
 
     getAuthenticationInfo() {
         return this.authenticationInfo;
+    }
+
+    checkTokenExpired() {
+        if (this.authenticationInfo.isAuthenticated === false) {
+            return false;
+        }
+
+        return Date.parse(this.authenticationInfo.token.expirationTime) <= Date.now();
     }
 }
 
