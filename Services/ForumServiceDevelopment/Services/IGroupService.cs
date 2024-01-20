@@ -1,4 +1,5 @@
-﻿using ForumServiceDevelopment.Models;
+﻿using ForumServiceDevelopment.Data.Models;
+using ForumServiceDevelopment.Models;
 using ForumServiceDevelopment.Models.Comments;
 using ForumServiceDevelopment.Models.Posts;
 using ForumServiceDevelopment.Models.Requests;
@@ -13,7 +14,7 @@ namespace ForumServiceDevelopment.Services
 
 		RequestGroupModel AddGroupRequest(RequestAddGroupModel model, Guid authorId);
 
-		RequestGroupModel ApproveRequest(Guid requestId);
+		RequestGroupModel ChangeRequestState(Guid requestId, RequestStatusEnum newStatus);
 
 
 

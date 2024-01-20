@@ -29,7 +29,7 @@ class ForumService {
 
     async getUserRequests() {
         try {
-            const response = await axios.get('/api/group/userrequest', {}, {
+            const response = await axios.get('/api/group/userrequests', {}, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -77,7 +77,29 @@ class ForumService {
 
     async approveRequest(id) {
         try {
-            const response = await axios.post('/api/group/request/' + id, {} , {
+            const response = await axios.post('/api/group/request/' + id, { newStatus: '1' } , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                message: ''
+            };
+        }
+        catch (error) {
+            return {
+                status: false,
+                message: error.response.data
+            };
+        }
+    }
+
+    async declineRequest(id) {
+        try {
+            const response = await axios.post('/api/group/request/' + id, { newStatus: '2' }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

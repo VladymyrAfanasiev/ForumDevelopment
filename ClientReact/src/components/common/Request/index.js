@@ -33,6 +33,16 @@ function Request(props) {
         }
     }
 
+    const declineRequest = async function () {
+        const result = await forumService.declineRequest(request.id);
+        if (result.status) {
+            setRequest(result.data);
+        }
+        else {
+            alert(result.message);
+        }
+    }
+
     return (
         <div className="request_item_container">
             <MainFrame>
@@ -65,7 +75,7 @@ function Request(props) {
                         <button className="root_a_button" onClick={approveRequest}>
                             <Trans>Approve</Trans>
                         </button>
-                        <button className="root_a_button">
+                        <button className="root_a_button" onClick={declineRequest}>
                             <Trans>Decline</Trans>
                         </button>
                     </div>

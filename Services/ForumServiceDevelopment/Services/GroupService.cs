@@ -43,7 +43,7 @@ namespace ForumServiceDevelopment.Services
 			return new RequestGroupModel(groupRequest);
 		}
 
-		public RequestGroupModel ApproveRequest(Guid requestId)
+		public RequestGroupModel ChangeRequestState(Guid requestId, RequestStatusEnum newStatus)
 		{
 			GroupRequest groupRequest = this.databaseContext.GroupRequests.FirstOrDefault(gr => gr.Id == requestId);
 			if (groupRequest == null)
@@ -51,18 +51,40 @@ namespace ForumServiceDevelopment.Services
 				return null;
 			}
 
-			Group existedGroup = this.databaseContext.Groups.FirstOrDefault(gr => gr.Name == groupRequest.Name);
-			if (existedGroup != null)
+			if (groupRequest.Status == newStatus)
 			{
 				return null;
 			}
 
-			RequestGroupModel requestModel = new RequestGroupModel(groupRequest);
-			Group newGroup = requestModel.ToGroupEntity();
+			if (groupRequest.Status != RequestStatusEnum.New)
+			{
+				return null;
+			}
 
-			groupRequest.Status = RequestStatusEnum.Approved;
+			if (newStatus == RequestStatusEnum.Approved)
+			{
+				Group existedGroup = this.databaseContext.Groups.FirstOrDefault(gr => gr.Name == groupRequest.Name);
+				if (existedGroup != null)
+				{
+					return null;
+				}
 
-			this.databaseContext.Groups.Add(newGroup);
+				groupRequest.Status = RequestStatusEnum.Approved;
+
+				RequestGroupModel requestModel = new RequestGroupModel(groupRequest);
+				Group newGroup = requestModel.ToGroupEntity();
+
+				this.databaseContext.Groups.Add(newGroup);
+			}
+			else if (newStatus == RequestStatusEnum.Declined)
+			{
+				groupRequest.Status = RequestStatusEnum.Declined;
+			}
+			else
+			{
+				throw new NotSupportedException();
+			}
+
 			this.databaseContext.SaveChanges();
 
 			return new RequestGroupModel(groupRequest);

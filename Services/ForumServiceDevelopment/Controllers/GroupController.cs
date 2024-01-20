@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using ForumServiceDevelopment.Data.Models;
 using ForumServiceDevelopment.Models;
 using ForumServiceDevelopment.Models.Comments;
 using ForumServiceDevelopment.Models.Posts;
@@ -38,7 +39,7 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
-		[HttpGet("userrequest")]
+		[HttpGet("userrequests")]
 		public IActionResult GetUserRequests()
 		{
 			UserInfo userInfo = GetAuthorizedUserInfo();
@@ -48,27 +49,8 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
-		[HttpPut("request")]
-		public IActionResult RequestAddGroup(RequestAddGroupModel requestAddGroupModel)
-		{
-			UserInfo userInfo = GetAuthorizedUserInfo();
-			RequestGroupModel model = this.groupService.AddGroupRequest(requestAddGroupModel, userInfo.Id);
-			if (model == null)
-			{
-				return BadRequest();
-			}
-
-			if (userInfo.Role == UserRole.Admin)
-			{
-				this.groupService.ApproveRequest(model.Id);
-			}
-
-			return Ok(model);
-		}
-
-		[Authorize]
 		[HttpPost("request/{requestId:guid}")]
-		public IActionResult AddGroup(Guid requestId)
+		public IActionResult ProcessRequest(Guid requestId, ProcessRequestModel processRequestModel)
 		{
 			UserInfo userInfo = GetAuthorizedUserInfo();
 			// TODO: move role check to attribute
@@ -77,10 +59,15 @@ namespace ForumServiceDevelopment.Controllers
 				return BadRequest("You do not have enough permissions for the operation");
 			}
 
-			RequestGroupModel model = this.groupService.ApproveRequest(requestId);
+			if (!Enum.TryParse(processRequestModel.newStatus, out RequestStatusEnum newRequestStatusEnum))
+			{
+				return BadRequest();
+			}
+
+			RequestGroupModel model = this.groupService.ChangeRequestState(requestId, newRequestStatusEnum);
 			if (model == null)
 			{
-				return BadRequest("Group with the same name already exists");
+				return BadRequest();
 			}
 
 			return Ok(model);
