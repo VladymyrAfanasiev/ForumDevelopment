@@ -4,24 +4,36 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForumServiceDevelopment", "Services\ForumServiceDevelopment\ForumServiceDevelopment.csproj", "{6F2CF912-8E0D-482E-AF9F-5728E204B182}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9} = {4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthorizationServiceDevelopment", "Services\AuthorizationServiceDevelopment\AuthorizationServiceDevelopment.csproj", "{0112A14F-93ED-4F25-BB82-38A2BB471944}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9} = {4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIGatewayServiceDevelopment", "Services\APIGatewayServiceDevelopment\APIGatewayServiceDevelopment.csproj", "{1F060C4D-D553-4E2F-BC1A-B951FA6991C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9} = {4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{64839655-FF13-4188-82BF-C0B596778A8E}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ClientReact", "ClientReact\ClientReact.esproj", "{76EED554-2DD5-4961-B4E5-C6A418216F9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourcesServiceDevelopment", "Services\ResourcesServiceDevelopment\ResourcesServiceDevelopment.csproj", "{C9A250FF-C91D-4FA1-83CE-F642607860D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F2CF912-8E0D-482E-AF9F-5728E204B182} = {6F2CF912-8E0D-482E-AF9F-5728E204B182}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureServiceDevelopment", "Services\InfrastructureServiceDevelopment\InfrastructureServiceDevelopment.csproj", "{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ClientReact", "ClientReact\ClientReact.esproj", "{3099E45A-3585-4E01-A29E-B0C4B0801449}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0112A14F-93ED-4F25-BB82-38A2BB471944} = {0112A14F-93ED-4F25-BB82-38A2BB471944}
 		{1F060C4D-D553-4E2F-BC1A-B951FA6991C4} = {1F060C4D-D553-4E2F-BC1A-B951FA6991C4}
 		{6F2CF912-8E0D-482E-AF9F-5728E204B182} = {6F2CF912-8E0D-482E-AF9F-5728E204B182}
 		{C9A250FF-C91D-4FA1-83CE-F642607860D7} = {C9A250FF-C91D-4FA1-83CE-F642607860D7}
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourcesServiceDevelopment", "Services\ResourcesServiceDevelopment\ResourcesServiceDevelopment.csproj", "{C9A250FF-C91D-4FA1-83CE-F642607860D7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureServiceDevelopment", "Services\InfrastructureServiceDevelopment\InfrastructureServiceDevelopment.csproj", "{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +53,6 @@ Global
 		{1F060C4D-D553-4E2F-BC1A-B951FA6991C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F060C4D-D553-4E2F-BC1A-B951FA6991C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F060C4D-D553-4E2F-BC1A-B951FA6991C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76EED554-2DD5-4961-B4E5-C6A418216F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76EED554-2DD5-4961-B4E5-C6A418216F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76EED554-2DD5-4961-B4E5-C6A418216F9B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{76EED554-2DD5-4961-B4E5-C6A418216F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76EED554-2DD5-4961-B4E5-C6A418216F9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76EED554-2DD5-4961-B4E5-C6A418216F9B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{C9A250FF-C91D-4FA1-83CE-F642607860D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9A250FF-C91D-4FA1-83CE-F642607860D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9A250FF-C91D-4FA1-83CE-F642607860D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,6 +61,12 @@ Global
 		{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B9E7F3D-DDF8-4E12-B0A9-EFD82FB299F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3099E45A-3585-4E01-A29E-B0C4B0801449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3099E45A-3585-4E01-A29E-B0C4B0801449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3099E45A-3585-4E01-A29E-B0C4B0801449}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3099E45A-3585-4E01-A29E-B0C4B0801449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3099E45A-3585-4E01-A29E-B0C4B0801449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3099E45A-3585-4E01-A29E-B0C4B0801449}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
