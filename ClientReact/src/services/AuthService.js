@@ -17,10 +17,10 @@ class AuthService {
         }
     }
 
-    async registerAsync(userName, email, password) {
+    async registerAsync(name, email, password) {
         try {
             const data = {
-                UserName: userName,
+                Name: name,
                 Email: email,
                 Password: password
             };

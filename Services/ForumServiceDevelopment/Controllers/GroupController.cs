@@ -49,6 +49,25 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
+		[HttpPut("request")]
+		public IActionResult RequestAddGroup(RequestAddGroupModel requestAddGroupModel)
+		{
+			UserInfo userInfo = GetAuthorizedUserInfo();
+			RequestGroupModel model = this.groupService.AddGroupRequest(requestAddGroupModel, userInfo.Id);
+			if (model == null)
+			{
+				return BadRequest();
+			}
+
+			if (userInfo.Role == UserRole.Admin)
+			{
+				this.groupService.ChangeRequestState(model.Id, RequestStatusEnum.Approved);
+			}
+
+			return Ok(model);
+		}
+
+		[Authorize]
 		[HttpPost("request/{requestId:guid}")]
 		public IActionResult ProcessRequest(Guid requestId, ProcessRequestModel processRequestModel)
 		{
