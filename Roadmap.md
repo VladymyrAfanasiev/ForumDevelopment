@@ -1,4 +1,4 @@
-1/29/2024
+# Road map
 
 - [ ] Improve the request system on client side (add more info, decline reason)
 - [ ] Refactor request system on server side (move the requests from groups)
