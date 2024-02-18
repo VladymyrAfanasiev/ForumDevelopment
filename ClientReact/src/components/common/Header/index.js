@@ -18,6 +18,14 @@ function Header() {
     const { transcript } = useSpeechRecognition();
     const recognition = new SpeechRecognition.getRecognition();
 
+    useEffect(() => {
+        if (authService.authenticationInfo.isAuthenticated && authService.checkTokenExpired()) {
+            authService.logoutAsync().then(() => {
+                dispatch(setAuthUserInfo(authService.authenticationInfo));
+            });
+        }
+    }, [])
+
     recognition.addEventListener("end", () => {
         document.getElementById("header_search_input").value = transcript;
     });
