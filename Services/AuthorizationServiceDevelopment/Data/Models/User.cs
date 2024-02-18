@@ -1,13 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using InfrastructureServiceDevelopment.Authentication;
 
 namespace AuthorizationServiceDevelopment.Data.Models
 {
-	public enum UserRole
-	{
-		User = 0,
-		Admin = 1
-	}
-
 	public class User
 	{
 		public Guid Id { get; set; }

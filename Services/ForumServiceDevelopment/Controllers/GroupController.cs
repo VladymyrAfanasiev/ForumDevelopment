@@ -1,10 +1,11 @@
-﻿using System.Security.Claims;
-using ForumServiceDevelopment.Data.Models;
+﻿using ForumServiceDevelopment.Data.Models;
 using ForumServiceDevelopment.Models;
 using ForumServiceDevelopment.Models.Comments;
 using ForumServiceDevelopment.Models.Posts;
 using ForumServiceDevelopment.Models.Requests;
 using ForumServiceDevelopment.Services;
+using InfrastructureServiceDevelopment.Authentication;
+using InfrastructureServiceDevelopment.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpGet("request")]
 		public IActionResult GetRequests()
 		{
-			UserInfo userInfo = GetAuthorizedUserInfo();
+			UserInfo userInfo = User.GetAuthorizedUserInfo();
 
 			// TODO: move role check to attribute
 			if (userInfo.Role != UserRole.Admin)
@@ -42,7 +43,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpGet("userrequests")]
 		public IActionResult GetUserRequests()
 		{
-			UserInfo userInfo = GetAuthorizedUserInfo();
+			UserInfo userInfo = User.GetAuthorizedUserInfo();
 			List<RequestGroupModel> models = this.groupService.GetRequests(userInfo.Id);
 
 			return Ok(models);
@@ -52,7 +53,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpPut("request")]
 		public IActionResult RequestAddGroup(RequestAddGroupModel requestAddGroupModel)
 		{
-			UserInfo userInfo = GetAuthorizedUserInfo();
+			UserInfo userInfo = User.GetAuthorizedUserInfo();
 			RequestGroupModel model = this.groupService.AddGroupRequest(requestAddGroupModel, userInfo.Id);
 			if (model == null)
 			{
@@ -71,7 +72,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpPost("request/{requestId:guid}")]
 		public IActionResult ProcessRequest(Guid requestId, ProcessRequestModel processRequestModel)
 		{
-			UserInfo userInfo = GetAuthorizedUserInfo();
+			UserInfo userInfo = User.GetAuthorizedUserInfo();
 			// TODO: move role check to attribute
 			if (userInfo.Role != UserRole.Admin)
 			{
@@ -128,7 +129,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpPut("{groupId:guid}/post")]
 		public IActionResult AddPost(Guid groupId, PostCreationModel creationModel)
 		{
-			PostModel model = this.groupService.AddPost(groupId, creationModel, GetAuthorizedUserInfo().Id);
+			PostModel model = this.groupService.AddPost(groupId, creationModel, User.GetAuthorizedUserInfo().Id);
 			if (model == null)
 			{
 				return BadRequest("Failed to add post");
@@ -141,7 +142,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpPut("{groupId:guid}/post/{postId:guid}/comment")]
 		public IActionResult AddComment(Guid groupId, Guid postId, CommentCreationModel creationModel)
 		{
-			CommentModel model = this.groupService.AddComment(postId, creationModel, GetAuthorizedUserInfo().Id);
+			CommentModel model = this.groupService.AddComment(postId, creationModel, User.GetAuthorizedUserInfo().Id);
 			if (model == null)
 			{
 				BadRequest();
@@ -153,7 +154,7 @@ namespace ForumServiceDevelopment.Controllers
 		[HttpGet("{groupId:guid}/post/{postId:guid}/comment/{commentId:guid}/reaction")]
 		public IActionResult GetCommentReactions(Guid groupId, Guid postId, Guid commentId)
 		{
-			CommentReactionsModel models = this.groupService.GetCommentReactions(commentId, GetAuthorizedUserInfo().Id);
+			CommentReactionsModel models = this.groupService.GetCommentReactions(commentId, User.GetAuthorizedUserInfo().Id);
 			if (models == null)
 			{
 				return NotFound("Comment not found");
@@ -176,52 +177,13 @@ namespace ForumServiceDevelopment.Controllers
 				return BadRequest();
 			}
 
-			CommentReactionsModel model = this.groupService.UpdateCommentReaction(commentId, reactionEnum, GetAuthorizedUserInfo().Id);
+			CommentReactionsModel model = this.groupService.UpdateCommentReaction(commentId, reactionEnum, User.GetAuthorizedUserInfo().Id);
 			if (model == null)
 			{
 				return BadRequest();
 			}
 
 			return Ok(model);
-		}
-
-		private UserInfo GetAuthorizedUserInfo()
-		{
-			string claimId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-			string claimRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-			if (!string.IsNullOrEmpty(claimId) && Guid.TryParse(claimId, out Guid id) &&
-				!string.IsNullOrEmpty(claimRole) && UserRole.TryParse(claimRole, out UserRole role))
-			{
-				return new UserInfo(id, role);
-			}
-
-			return new UserInfo();
-		}
-
-		private enum UserRole
-		{
-			Undefined = -1,
-			User = 0,
-			Admin = 1
-		}
-
-		private class UserInfo
-		{
-			public UserInfo()
-			{
-				Id = Guid.Empty;
-				Role = UserRole.Undefined;
-			}
-
-			public UserInfo(Guid id, UserRole role)
-			{
-				Id = id;
-				Role = role;
-			}
-
-			public Guid Id { get; }
-
-			public UserRole Role { get; }
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AuthorizationServiceDevelopment.Data.Models;
+using InfrastructureServiceDevelopment.Authentication;
 
 namespace AuthorizationServiceDevelopment.Models.Users
 {
