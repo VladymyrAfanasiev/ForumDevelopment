@@ -7,7 +7,7 @@ class ForumService {
 
     async getRequests() {
         try {
-            const response = await axios.get('/api/group/request', {}, {
+            const response = await axios.get('/api/request', {}, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -29,7 +29,7 @@ class ForumService {
 
     async getUserRequests() {
         try {
-            const response = await axios.get('/api/group/userrequests', {}, {
+            const response = await axios.get('/api/request/userrequests', {}, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -56,7 +56,7 @@ class ForumService {
                 Description: description
             };
 
-            const response = await axios.put('/api/group/request', data, {
+            const response = await axios.put('/api/request', data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -77,7 +77,7 @@ class ForumService {
 
     async approveRequest(id) {
         try {
-            const response = await axios.post('/api/group/request/' + id, { newStatus: '1' } , {
+            const response = await axios.post('/api/request/' + id, { newStatus: '1' } , {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -99,7 +99,7 @@ class ForumService {
 
     async declineRequest(id) {
         try {
-            const response = await axios.post('/api/group/request/' + id, { newStatus: '2' }, {
+            const response = await axios.post('/api/request/request/' + id, { newStatus: '2' }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

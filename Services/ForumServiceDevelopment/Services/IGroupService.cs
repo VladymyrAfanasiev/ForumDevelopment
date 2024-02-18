@@ -1,22 +1,11 @@
-﻿using ForumServiceDevelopment.Data.Models;
-using ForumServiceDevelopment.Models;
+﻿using ForumServiceDevelopment.Models;
 using ForumServiceDevelopment.Models.Comments;
 using ForumServiceDevelopment.Models.Posts;
-using ForumServiceDevelopment.Models.Requests;
 
 namespace ForumServiceDevelopment.Services
 {
 	public interface IGroupService
 	{
-		List<RequestGroupModel> GetRequests();
-
-		List<RequestGroupModel> GetRequests(Guid authorId);
-
-		RequestGroupModel AddGroupRequest(RequestAddGroupModel model, Guid authorId);
-
-		RequestGroupModel ChangeRequestState(Guid requestId, RequestStatusEnum newStatus);
-
-
 
 		List<GroupSimpleModel> GetGroups();
 

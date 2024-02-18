@@ -1,10 +1,7 @@
-﻿using ForumServiceDevelopment.Data.Models;
-using ForumServiceDevelopment.Models;
+﻿using ForumServiceDevelopment.Models;
 using ForumServiceDevelopment.Models.Comments;
 using ForumServiceDevelopment.Models.Posts;
-using ForumServiceDevelopment.Models.Requests;
 using ForumServiceDevelopment.Services;
-using InfrastructureServiceDevelopment.Authentication;
 using InfrastructureServiceDevelopment.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,64 +17,6 @@ namespace ForumServiceDevelopment.Controllers
 		public GroupController(IGroupService groupService)
 		{
 			this.groupService = groupService;
-		}
-
-		[Authorize]
-		[RoleRequirementFilter(UserRole.Admin)]
-		[HttpGet("request")]
-		public IActionResult GetRequests()
-		{
-			List<RequestGroupModel> models = this.groupService.GetRequests();
-
-			return Ok(models);
-		}
-
-		[Authorize]
-		[HttpGet("userrequests")]
-		public IActionResult GetUserRequests()
-		{
-			UserInfo userInfo = User.GetAuthorizedUserInfo();
-			List<RequestGroupModel> models = this.groupService.GetRequests(userInfo.Id);
-
-			return Ok(models);
-		}
-
-		[Authorize]
-		[HttpPut("request")]
-		public IActionResult RequestAddGroup(RequestAddGroupModel requestAddGroupModel)
-		{
-			UserInfo userInfo = User.GetAuthorizedUserInfo();
-			RequestGroupModel model = this.groupService.AddGroupRequest(requestAddGroupModel, userInfo.Id);
-			if (model == null)
-			{
-				return BadRequest();
-			}
-
-			if (userInfo.Role == UserRole.Admin)
-			{
-				this.groupService.ChangeRequestState(model.Id, RequestStatusEnum.Approved);
-			}
-
-			return Ok(model);
-		}
-
-		[Authorize]
-		[RoleRequirementFilter(UserRole.Admin)]
-		[HttpPost("request/{requestId:guid}")]
-		public IActionResult ProcessRequest(Guid requestId, ProcessRequestModel processRequestModel)
-		{
-			if (!Enum.TryParse(processRequestModel.newStatus, out RequestStatusEnum newRequestStatusEnum))
-			{
-				return BadRequest();
-			}
-
-			RequestGroupModel model = this.groupService.ChangeRequestState(requestId, newRequestStatusEnum);
-			if (model == null)
-			{
-				return BadRequest();
-			}
-
-			return Ok(model);
 		}
 
 		[HttpGet]

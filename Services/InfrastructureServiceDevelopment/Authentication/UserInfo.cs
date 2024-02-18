@@ -17,5 +17,7 @@
 		public Guid Id { get; }
 
 		public UserRole Role { get; }
+
+		public bool IsAdmin { get { return Role == UserRole.Admin; } }
 	}
 }

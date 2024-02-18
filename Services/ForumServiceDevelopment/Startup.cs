@@ -45,6 +45,7 @@ namespace ForumServiceDevelopment
 			services.AddControllers();
 
 			services.AddTransient<IGroupService, GroupService>();
+			services.AddTransient<IRequestService, RequestService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
