@@ -23,17 +23,10 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
+		[RoleRequirementFilter(UserRole.Admin)]
 		[HttpGet("request")]
 		public IActionResult GetRequests()
 		{
-			UserInfo userInfo = User.GetAuthorizedUserInfo();
-
-			// TODO: move role check to attribute
-			if (userInfo.Role != UserRole.Admin)
-			{
-				return BadRequest();
-			}
-
 			List<RequestGroupModel> models = this.groupService.GetRequests();
 
 			return Ok(models);
@@ -69,16 +62,10 @@ namespace ForumServiceDevelopment.Controllers
 		}
 
 		[Authorize]
+		[RoleRequirementFilter(UserRole.Admin)]
 		[HttpPost("request/{requestId:guid}")]
 		public IActionResult ProcessRequest(Guid requestId, ProcessRequestModel processRequestModel)
 		{
-			UserInfo userInfo = User.GetAuthorizedUserInfo();
-			// TODO: move role check to attribute
-			if (userInfo.Role != UserRole.Admin)
-			{
-				return BadRequest("You do not have enough permissions for the operation");
-			}
-
 			if (!Enum.TryParse(processRequestModel.newStatus, out RequestStatusEnum newRequestStatusEnum))
 			{
 				return BadRequest();
